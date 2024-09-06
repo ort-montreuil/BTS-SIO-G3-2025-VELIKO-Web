@@ -12,5 +12,7 @@ git clone https://github.com/ort-montreuil/BTS-SIO-G3-2025-VELIKO-Web.git
 ```
 Installation des dépendances avec composer (vendor)
 ```
+```
 composer install
 ```
+
