@@ -74,6 +74,21 @@
         var macarte = null;
         var markerClusters; // Servira à stocker les groupes de marqueurs
 
+        //on personnalise le marqueur
+        var icone = L.icon({
+            iconUrl:"image/icons8-localisation-de-l'utilisateur-100.png",
+            iconSize:[50,50],
+            iconAnchor:[25,50],
+            popupAnchor:[0,-50]
+        })
+        var icone1 = L.icon({
+            iconUrl:"image/imageMarker.png_1-removebg-preview.png",
+            iconSize:[50,50],
+            iconAnchor:[25,50],
+            popupAnchor:[0,-50]
+        })
+
+        //logo
         // Fonction d'initialisation de la carte
         function initMap() {
             macarte = L.map('map').setView([lat, lon], 11);
@@ -89,7 +104,7 @@
                 navigator.geolocation.getCurrentPosition(function (position) {
                     var lat = position.coords.latitude;
                     var lon = position.coords.longitude;
-                    L.marker([lat, lon]).addTo(macarte);
+                    L.marker([lat, lon],{icon: icone}).addTo(macarte);
                 }, function (error) {
                     console.log("Erreur lors de la récupération de la position : ", error);
                 });
@@ -98,7 +113,7 @@
             }
 
             {% for station in stationData %}
-            var marker = L.marker([{{ station.lat }}, {{ station.lon }}]);
+            var marker = L.marker([{{ station.lat }}, {{ station.lon }}],{icon:icone1});
             marker.bindPopup("Nom station : {{ station.nom }}" +
                 "<br> Nombre de vélos disponibles : {{ station.numBikesAvailable }}" +
                 "<br> Vélo Mécanique : {{ station.veloMecanique }}" +
