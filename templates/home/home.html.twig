@@ -76,11 +76,18 @@
 
         //on personnalise le marqueur
         var icone = L.icon({
+            iconUrl:"image/icons8-localisation-de-l'utilisateur-100.png",
+            iconSize:[50,50],
+            iconAnchor:[25,50],
+            popupAnchor:[0,-50]
+        })
+        var icone1 = L.icon({
             iconUrl:"image/imageMarker.png_1-removebg-preview.png",
             iconSize:[50,50],
             iconAnchor:[25,50],
             popupAnchor:[0,-50]
         })
+
 
         // Fonction d'initialisation de la carte
         function initMap() {
@@ -106,7 +113,7 @@
             }
 
             {% for station in stationData %}
-            var marker = L.marker([{{ station.lat }}, {{ station.lon }}]);
+            var marker = L.marker([{{ station.lat }}, {{ station.lon }}],{icon:icone1});
             marker.bindPopup("Nom station : {{ station.nom }}" +
                 "<br> Nombre de vélos disponibles : {{ station.numBikesAvailable }}" +
                 "<br> Vélo Mécanique : {{ station.veloMecanique }}" +
