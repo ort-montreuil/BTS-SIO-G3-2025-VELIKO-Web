@@ -6,50 +6,128 @@
     <style>
         body {
             font-family: Arial, sans-serif;
-            background-size: cover;
-            background-position: center;
-            background-repeat: no-repeat;
-        }
-        #entete {
-
-            padding: 20px;
-            text-align: center;
-            color: white;
-            border-color: black;
-            border-style: solid;
-            background-color: white;
-            display: block;
-            padding-bottom: 10px;
+            margin: 0;
+            padding: 0;
         }
 
-        .liens {
+        .navbar {
+            display: flex;
+            justify-content: space-between;
+            background-color: #fff;
+            padding: 10px 20px;
+            border-bottom: 2px solid #e0e0e0;
+        }
+
+        .navbar a {
             text-decoration: none;
-            color: #007bff;
-            font-weight: bold;
-            margin-left: 150px;
+            color: #333;
+            padding: 10px;
+            font-size: 14px;
         }
 
-        .image {
-            width: 55px;
-            height: auto;
-            padding-bottom: 10px;
+        .navbar a:hover {
+            color: #4CAF50;
+        }
+
+        .navbar-right {
+            display: flex;
+            align-items: center;
+        }
+
+        .social-icons img {
+            width: 20px;
+            height: 20px;
+            margin-left: 10px;
+        }
+
+        .connect-button, .signup-button {
+            background-color: #0071c5;
+            color: white;
+            padding: 10px 15px;
+            border: none;
+            border-radius: 3px;
+            cursor: pointer;
+            margin-left: 10px;
+        }
+
+        .connect-button:hover, .signup-button:hover {
+            background-color: #005f99;
+        }
+
+        .map-container {
+            display: flex;
+            justify-content: center;
+            align-items: center;
         }
 
         #map {
-            height: 584px;
+            width: 100%;
+            height: 700px;
+        }
+
+        .signup-container {
+            max-width: 400px;
+            margin: 50px auto;
+            padding: 20px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            background-color: #f9f9f9;
+        }
+
+        .signup-container h2 {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+
+        .signup-container input {
+            width: 100%;
+            padding: 10px;
+            margin-bottom: 10px;
+            border: 1px solid #ccc;
+            border-radius: 3px;
+        }
+
+        .signup-container button {
+            width: 100%;
+            padding: 10px;
+            background-color: #0071c5;
+            color: white;
+            border: none;
+            border-radius: 3px;
+            cursor: pointer;
+        }
+
+        .signup-container button:hover {
+            background-color: #005f99;
         }
     </style>
 
-    <div id="entete">
-        <nav style="display: flex; justify-content: center">
-            <img class="image" src="/image/LOGO__2_-removebg-preview.png">
-            <a class="liens" href="/apropos">A propos de Veliko</a>
-            <a class="liens"href="/">Map</a>
-            <a class="liens" href="#" >Contacter Veliko</a>
-            <a class="liens" href="/login">Se connecter</a>
-        </nav>
+    <div class="navbar">
+        <div class="navbar-left">
+            <a href="/apropos">A propos de Veliko</a>
+            <a href="/">Map</a>
+            <a href="#">Contacter Veliko</a>
+        </div>
+        <div class="navbar-right">
+            <button class="connect-button">Se connecter</button>
+            <button class="signup-button" onclick="document.getElementById('signup-form').scrollIntoView();">Créer un compte</button>
+        </div>
     </div>
-    <div id="map"></div>
+
+    <div class="map-container">
+        <div id="map"></div>
+    </div>
+
+    <div id="signup-form" class="signup-container">
+        <h2>Créer un compte</h2>
+        <form method="POST" action="/signup">
+            <input type="text" name="username" placeholder="Nom d'utilisateur" required>
+            <input type="email" name="email" placeholder="Email" required>
+            <input type="password" name="password" placeholder="Mot de passe" required>
+            <input type="password" name="confirm_password" placeholder="Confirmer le mot de passe" required>
+            <button type="submit">S'inscrire</button>
+        </form>
+    </div>
 
     <!-- Fichiers CSS pour Leaflet et MarkerCluster -->
     <link rel="stylesheet" href="https://unpkg.com/leaflet@1.3.1/dist/leaflet.css"
@@ -68,31 +146,14 @@
             src='https://unpkg.com/leaflet.markercluster@1.3.0/dist/leaflet.markercluster.js'></script>
 
     <script type="text/javascript">
-        // On initialise la latitude et la longitude de Paris (centre de la carte)
         var lat = 48.852969;
         var lon = 2.349903;
         var macarte = null;
         var markerClusters; // Servira à stocker les groupes de marqueurs
 
-        //on personnalise le marqueur
-        var icone = L.icon({
-            iconUrl:"image/icons8-localisation-de-l'utilisateur-100.png",
-            iconSize:[50,50],
-            iconAnchor:[25,50],
-            popupAnchor:[0,-50]
-        })
-        var icone1 = L.icon({
-            iconUrl:"image/imageMarker.png_1-removebg-preview.png",
-            iconSize:[50,50],
-            iconAnchor:[25,50],
-            popupAnchor:[0,-50]
-        })
-
-        //logo
-        // Fonction d'initialisation de la carte
         function initMap() {
             macarte = L.map('map').setView([lat, lon], 11);
-            markerClusters = L.markerClusterGroup(); // Nous initialisons les groupes de marqueurs
+            markerClusters = L.markerClusterGroup();
 
             L.tileLayer('https://{s}.tile.openstreetmap.fr/osmfr/{z}/{x}/{y}.png', {
                 attribution: 'données © <a href="//osm.org/copyright">OpenStreetMap</a>/ODbL - rendu <a href="//openstreetmap.fr">OSM France</a>',
@@ -100,20 +161,8 @@
                 maxZoom: 20
             }).addTo(macarte);
 
-            if (navigator.geolocation) {
-                navigator.geolocation.getCurrentPosition(function (position) {
-                    var lat = position.coords.latitude;
-                    var lon = position.coords.longitude;
-                    L.marker([lat, lon],{icon: icone}).addTo(macarte);
-                }, function (error) {
-                    console.log("Erreur lors de la récupération de la position : ", error);
-                });
-            } else {
-                console.log("La géolocalisation n'est pas supportée par ce navigateur.");
-            }
-
             {% for station in stationData %}
-            var marker = L.marker([{{ station.lat }}, {{ station.lon }}],{icon:icone1});
+            var marker = L.marker([{{ station.lat }}, {{ station.lon }}]);
             marker.bindPopup("Nom station : {{ station.nom }}" +
                 "<br> Nombre de vélos disponibles : {{ station.numBikesAvailable }}" +
                 "<br> Vélo Mécanique : {{ station.veloMecanique }}" +
@@ -127,5 +176,6 @@
         window.onload = function () {
             initMap();
         };
+
     </script>
 {% endblock %}
