@@ -10,7 +10,7 @@ class HomeController extends AbstractController
 {
     # = attributs
     # @= annotations
-    #[Route('/home')]
+    #[Route('/')]
     public function Home(): Response
     {
         $curl = curl_init();
