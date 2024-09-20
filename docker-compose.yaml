@@ -9,28 +9,30 @@ services:
       - "3306:3306"
     restart: always
     environment:
-      #MYSQL_ALLOW_EMPTY_PASSWORD: 'yes'
       MYSQL_ROOT_PASSWORD: root
       MYSQL_DATABASE: app_db
-      #MYSQL_USER: app_db_user
-      #MYSQL_PASSWORD: app_db_password
     volumes:
       - ../var/dbdata:/var/lib/mysql
-  #PHP My Admin
+
   phpmyadmin:
     container_name: velikoWeb-pma
     image: phpmyadmin:latest
     restart: always
-
     ports:
       - "8081:80"
     environment:
       PMA_HOST: database
     links:
       - database
-#Network
+
+  mock-veliko-api:
+    container_name: mock-veliko-api
+    image: bfoujols/mock-veliko-api:latest
+    ports:
+      - "9042:80"
+
 networks:
   dev:
-#Volumes
+
 volumes:
   db-data:
