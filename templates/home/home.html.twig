@@ -97,6 +97,12 @@
             cursor: pointer;
         }
 
+        .image
+        {
+            width: 100px;
+            height: auto;
+            padding-bottom: 10px;
+        }
         .signup-container button:hover {
             background-color: #005f99;
         }
@@ -104,29 +110,19 @@
 
     <div class="navbar">
         <div class="navbar-left">
+            <img class="image" src="image/image_no_white_background.png">
             <a href="/apropos">A propos de Veliko</a>
             <a href="/">Map</a>
             <a href="#">Contacter Veliko</a>
+
         </div>
         <div class="navbar-right">
             <button class="connect-button">Se connecter</button>
-            <button class="signup-button" onclick="document.getElementById('signup-form').scrollIntoView();">Créer un compte</button>
         </div>
     </div>
 
     <div class="map-container">
         <div id="map"></div>
-    </div>
-
-    <div id="signup-form" class="signup-container">
-        <h2>Créer un compte</h2>
-        <form method="POST" action="/signup">
-            <input type="text" name="username" placeholder="Nom d'utilisateur" required>
-            <input type="email" name="email" placeholder="Email" required>
-            <input type="password" name="password" placeholder="Mot de passe" required>
-            <input type="password" name="confirm_password" placeholder="Confirmer le mot de passe" required>
-            <button type="submit">S'inscrire</button>
-        </form>
     </div>
 
     <!-- Fichiers CSS pour Leaflet et MarkerCluster -->
@@ -179,7 +175,9 @@
                 navigator.geolocation.getCurrentPosition(function (position) {
                     var lat = position.coords.latitude;
                     var lon = position.coords.longitude;
-                    L.marker([lat, lon],{icon: icone}).addTo(macarte);
+                     var userMarker = L.marker([lat, lon],{icon: icone}).addTo(macarte);
+                    userMarker.bindPopup("vous etes ici");
+
                 }, function (error) {
                     console.log("Erreur lors de la récupération de la position : ", error);
                 });
