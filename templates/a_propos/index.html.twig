@@ -1,20 +1,180 @@
-{% extends 'base.html.twig' %}
+{% extends "base.html.twig" %}
 
-{% block title %}Hello AProposController!{% endblock %}
+{% block title %}À propos de Veliko{% endblock %}
 
-{% block body %}
-<style>
-    .example-wrapper { margin: 1em auto; max-width: 800px; width: 95%; font: 18px/1.5 sans-serif; }
-    .example-wrapper code { background: #F5F5F5; padding: 2px 6px; }
-</style>
+{% block content %}
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f4f4f9;
+            color: #333;
+        }
 
-<div class="example-wrapper">
-    <h1>Hello {{ controller_name }}! ✅</h1>
+        .navbar {
+            display: flex;
+            justify-content: space-between;
+            background-color: #fff;
+            padding: 10px 20px;
+            border-bottom: 2px solid #e0e0e0;
+        }
 
-    This friendly message is coming from:
-    <ul>
-        <li>Your controller at <code>C:/Users/shrl0/Documents/ortmontreuil3/BTS-SIO-G3-2025-VELIKO-Web/src/Controller/AProposController.php</code></li>
-        <li>Your template at <code>C:/Users/shrl0/Documents/ortmontreuil3/BTS-SIO-G3-2025-VELIKO-Web/templates/a_propos/index.html.twig</code></li>
-    </ul>
-</div>
+        .navbar a {
+            text-decoration: none;
+            color: #333;
+            padding: 10px;
+            font-size: 14px;
+        }
+
+        .navbar a:hover {
+            color: #4CAF50;
+        }
+
+        .navbar-right {
+            display: flex;
+            align-items: center;
+        }
+
+        .social-icons img {
+            width: 20px;
+            height: 20px;
+            margin-left: 10px;
+        }
+
+        .connect-button {
+            background-color: #0071c5;
+            color: white;
+            padding: 10px 15px;
+            border: none;
+            border-radius: 3px;
+            cursor: pointer;
+            margin-left: 10px;
+            transition: background-color 0.3s ease;
+        }
+
+        .connect-button:hover {
+            background-color: #005f99;
+        }
+
+        /* Section À propos */
+        #about-section {
+            padding: 50px;
+            background-color: #fff;
+            text-align: center;
+        }
+
+        #about-section h2 {
+            font-size: 36px;
+            margin-bottom: 20px;
+            position: relative;
+            display: inline-block;
+            animation: fadeIn 1s ease-in-out;
+        }
+
+        #about-section p {
+            font-size: 18px;
+            line-height: 1.6;
+            color: #555;
+            margin-bottom: 20px;
+        }
+
+        #about-section .facts {
+            margin-top: 30px;
+            text-align: left;
+        }
+
+        #about-section .facts ul {
+            list-style-type: none;
+            padding-left: 0;
+        }
+
+        #about-section .facts ul li {
+            font-size: 16px;
+            margin-bottom: 10px;
+            position: relative;
+            padding-left: 20px;
+            animation: slideIn 1.5s ease-in-out;
+        }
+
+        #about-section .facts ul li::before {
+            content: '✔';
+            position: absolute;
+            left: 0;
+            top: 0;
+            color: #4CAF50;
+        }
+
+        /* Animation pour les titres */
+        @keyframes fadeIn {
+            0% { opacity: 0; transform: translateY(-20px); }
+            100% { opacity: 1; transform: translateY(0); }
+        }
+
+        /* Animation pour les éléments de la liste */
+        @keyframes slideIn {
+            0% { opacity: 0; transform: translateX(-50px); }
+            100% { opacity: 1; transform: translateX(0); }
+        }
+
+        /* Footer */
+        .footer {
+            background-color: #0071c5;
+            color: white;
+            padding: 20px;
+            text-align: center;
+            position: relative;
+            bottom: 0;
+            width: 100%;
+        }
+
+        .footer p {
+            margin: 0;
+        }
+    </style>
+
+    <div class="navbar">
+        <div class="navbar-left">
+            <img class="image" src="image/image_no_white_background.png">
+            <a href="/apropos">À propos de Veliko</a>
+            <a href="/">Map</a>
+            <a href="#">Contacter Veliko</a>
+        </div>
+        <div class="navbar-right">
+            <a href="/login">
+                <button class="connect-button">Se connecter</button>
+            </a>        </div>
+    </div>
+
+    <div id="about-section">
+        <h2>À propos de Veliko</h2>
+        <p>
+            Veliko est une entreprise innovante dédiée à la mobilité urbaine intelligente. Notre objectif est de faciliter la gestion des
+            vélos en libre-service grâce à une application intuitive qui permet de suivre en temps réel la disponibilité des vélos dans
+            toute la région de Paris.
+        </p>
+        <p>
+            Lancée dans la foulée de l'initiative "Vélib' Métropole", Veliko s'appuie sur l'un des services de vélos partagés les plus performants
+            au monde pour améliorer la mobilité durable dans les grandes villes.
+        </p>
+        <p>
+            Nous croyons fermement que la technologie peut améliorer le quotidien des citadins en facilitant leurs déplacements tout en réduisant
+            leur empreinte carbone.
+        </p>
+
+        <div class="facts">
+            <h3>Velib' en chiffres :</h3>
+            <ul>
+                <li>Plus de 19 000 vélos disponibles (40% à assistance électrique)</li>
+                <li>1 464 stations réparties à Paris et en Île-de-France</li>
+                <li>390 000 abonnés fidèles en 2022</li>
+                <li>4,7 millions de trajets réalisés en octobre 2022</li>
+                <li>Record de 212 000 trajets en une journée (10 octobre 2022)</li>
+            </ul>
+        </div>
+    </div>
+
+    <div class="footer">
+        <p>© 2024 Veliko. Tous droits réservés.</p>
+    </div>
 {% endblock %}
