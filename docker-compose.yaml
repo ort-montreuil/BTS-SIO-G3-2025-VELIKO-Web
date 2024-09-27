@@ -1,37 +1,38 @@
-version: "3.8"
 services:
-  database:
-    container_name: velikoWeb
-    image: mysql:5.7
-    platform: linux/amd64
-    ports:
-      - "3306:3306"
-    restart: always
-    environment:
-      MYSQL_ROOT_PASSWORD: root
-      MYSQL_DATABASE: app_db
-    volumes:
-      - ../var/dbdata:/var/lib/mysql
-
-  phpmyadmin:
-    container_name: velikoWeb-pma
-    image: phpmyadmin:latest
-    restart: always
-    ports:
-      - "8081:80"
-    environment:
-      PMA_HOST: database
-    links:
-      - database
-
   mock-veliko-api:
     container_name: mock-veliko-api
     image: bfoujols/mock-veliko-api:latest
     ports:
       - "9042:80"
 
-networks:
-  dev:
+  database:
+    container_name: veliko-database
+    image: mariadb:latest
+    ports:
+      - "3306:3306"
+    restart: always
+    environment:
+      MYSQL_DATABASE: app_db
+      #MYSQL_ALLOW_EMPTY_PASSWORD: 'yes'
+      MYSQL_ROOT_PASSWORD: root
+      TZ: Europe/Paris
+    volumes:
+      - ./var/dbdata:/var/lib/mysql
 
-volumes:
-  db-data:
+  phpmyadmin:
+    container_name: veliko-pma
+    image: phpmyadmin/phpmyadmin
+    ports:
+      - "8081:80"
+    environment:
+      PMA_HOST: database
+      PMA_PORT: 3306
+      PMA_ARBITRARY: 1
+      UPLOAD_LIMIT: 1G
+      MEMORY_LIMIT: 512M
+      MAX_EXECUTION_TIME: 0
+    restart: always
+    links:
+      - database
+    depends_on:
+      - database
