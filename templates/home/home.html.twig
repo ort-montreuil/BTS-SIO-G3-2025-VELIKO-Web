@@ -176,7 +176,7 @@
                     var lat = position.coords.latitude;
                     var lon = position.coords.longitude;
                      var userMarker = L.marker([lat, lon],{icon: icone}).addTo(macarte);
-                    userMarker.bindPopup("vous etes ici");
+                    userMarker.bindPopup("vous etes ici ! ");
 
                 }, function (error) {
                     console.log("Erreur lors de la récupération de la position : ", error);
