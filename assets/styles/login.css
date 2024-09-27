@@ -50,4 +50,9 @@ input[type="submit"] {
     color: #007bff;
     text-decoration: none;
 }
-
+.image
+{
+    width: 100px;
+    height: auto;
+    padding-bottom: 10px;
+}
