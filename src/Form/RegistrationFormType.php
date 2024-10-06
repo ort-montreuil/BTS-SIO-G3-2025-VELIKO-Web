@@ -5,7 +5,9 @@ namespace App\Form;
 use App\Entity\User;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
+use Symfony\Component\Form\Extension\Core\Type\DateType;
 use Symfony\Component\Form\Extension\Core\Type\PasswordType;
+use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Validator\Constraints\IsTrue;
@@ -18,12 +20,25 @@ class RegistrationFormType extends AbstractType
     {
         $builder
             ->add('email')
-            ->add('nom')
-            ->add('prenom')
-            ->add('ville')
-            ->add('date_naissance')
-            ->add('code_postal')
-            ->add('adresse')
+            ->add('nom', TextType::class, [
+                'constraints' => [
+                    new NotBlank([
+                        'message' => 'Please enter your name',
+                    ]),
+                ],
+            ])
+            ->add('prenom', TextType::class, [
+                'constraints' => [
+                    new NotBlank([
+                        'message' => 'Please enter your first name',
+                    ]),
+                ]
+            ])
+            ->add('date_naissance', DateType::class, [
+            ])
+            ->add('adresse',TextType::class ,[])
+            ->add('ville',TextType::class,[])
+            ->add('codePostal',TextType::class,[])
             ->add('agreeTerms', CheckboxType::class, [
                 'mapped' => false,
                 'constraints' => [

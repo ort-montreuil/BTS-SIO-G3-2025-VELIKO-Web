@@ -47,11 +47,12 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     #[ORM\Column(type: Types::DATE_MUTABLE)]
     private ?\DateTimeInterface $date_naissance = null;
 
-    #[ORM\Column]
-    private ?int $code_postal = null;
 
     #[ORM\Column(length: 100)]
     private ?string $adresse = null;
+
+    #[ORM\Column(length: 255)]
+    private ?string $codePostal = null;
 
     public function getId(): ?int
     {
@@ -175,17 +176,8 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
         return $this;
     }
 
-    public function getCodePostal(): ?int
-    {
-        return $this->code_postal;
-    }
 
-    public function setCodePostal(int $code_postal): static
-    {
-        $this->code_postal = $code_postal;
 
-        return $this;
-    }
 
     public function getAdresse(): ?string
     {
@@ -195,6 +187,18 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     public function setAdresse(string $adresse): static
     {
         $this->adresse = $adresse;
+
+        return $this;
+    }
+
+    public function getCodePostal(): ?string
+    {
+        return $this->codePostal;
+    }
+
+    public function setCodePostal(string $codePostal): static
+    {
+        $this->codePostal = $codePostal;
 
         return $this;
     }
