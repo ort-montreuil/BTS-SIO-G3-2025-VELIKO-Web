@@ -1,0 +1,29 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Profil de {{ app.user.prenom }} {{ app.user.nom }} :{% endblock %}
+
+{% block body %}
+    <div class="col-xs4"><h3>Profil de {{ app.user.prenom }} {{ app.user.nom }} :</h3></div>
+    <div class="grix xs2">
+        <div class="col-xs1">Email :</div>
+        <div class="col-xs3">{{ app.user.email }}</div>
+        <div class="col-xs1">Nom : </div>
+        <div class="col-xs3">{{ app.user.nom }}</div>
+        <div class="col-xs1">Prénom :</div>
+        <div class="col-xs3">{{ app.user.prenom }}</div>
+        <div class="col-xs1">Adresse:</div>
+        <div class="col-xs3">{{ app.user.adresse }}</div>
+        <div class="col-xs1">Ville :</div>
+        <div class="col-xs3">{{ app.user.ville }}</div>
+        <div class="col-xs1">Code Postal :</div>
+        <div class="col-xs3">{{ app.user.codePostal}}</div>
+        <div class="col-xs1">Mot de passe:</div>
+        <div class="col-xs-3">*******</div>
+        <br>
+        <div class="col-xs4">
+            <a href="{{ path('user.edit', { 'id': app.user.id }) }}" class="connect-button btn btn-primary">Modifier</a>
+            <a href="#" class="connect-button btn btn-primary">Modifier Mot de passe</a>
+        </div>
+        <br>
+    </div>
+{% endblock %}
