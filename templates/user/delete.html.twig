@@ -1,0 +1,11 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Suppression de compte réussie{% endblock %}
+
+{% block body %}
+    {% for message in app.flashes('success') %}
+        <div class="alert alert-success">
+            {{ message }}
+        </div>
+    {% endfor %}
+{% endblock %}
