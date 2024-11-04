@@ -1,3 +1,4 @@
+<!-- base.html.twig -->
 <!DOCTYPE html>
 <html lang="fr">
 <head>
@@ -15,14 +16,7 @@
         <link rel="stylesheet" href="css/login.css">
         <link rel="stylesheet" href="css/register.css">
         <link rel="stylesheet" href="css/home.css">
-    {% endblock %}
-
-    {# Inclusion de Bootstrap JS #}
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
-
-    {# Inclusion des scripts JavaScript spécifiques à la page #}
-    {% block javascripts %}
-        <script src="js/app.js"></script>
+        <link rel="stylesheet" href="css/acceuil.css">
     {% endblock %}
 </head>
 <body>
@@ -30,16 +24,15 @@
 <header>
     {# Entête avec la barre de navigation #}
     <div class="navbar">
-        <div class="navbar-left d-flex align-items-center">
-            <img class="image" src="../image/image_no_white_background.png" alt="Logo Veliko">
-            <a href="/" class="nav-link">Accueil</a>
-            <a href="/apropos" class="nav-link">À propos de Veliko</a>
-            <a href="/user" class="nav-link">Mon compte</a>
+        <div class="navbar-left">
+            <img class="image" src="/image/image_no_white_background.png" alt="Logo">
+            <a href="/apropos">À propos de Veliko</a>
+            <a href="/carte">Map</a>
+            <a href="#">Contacter Veliko</a>
+            <a href="/user">Mon compte</a>
         </div>
         <div class="navbar-right">
-            <a href="/login">
-                <button class="connect-button btn btn-primary">Se connecter</button>
-            </a>
+            <a href="/register" class="connect-button">Se connecter</a>
         </div>
     </div>
 </header>
@@ -55,7 +48,21 @@
 </div>
 
 {# Bloc pour le footer, si nécessaire #}
-{% block footer %}{% endblock %}
+{% block footer %}
+    <footer>
+        <div style="text-align: center; padding: 20px; background-color: #f8f8f8;">
+            <p>&copy; 2024 Veliko - Tous droits réservés.</p>
+        </div>
+    </footer>
+{% endblock %}
+
+{# Inclusion de Bootstrap JS #}
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
+
+{# Inclusion des scripts JavaScript spécifiques à la page #}
+{% block javascripts %}
+    <script src="js/app.js"></script>
+{% endblock %}
 
 </body>
 </html>

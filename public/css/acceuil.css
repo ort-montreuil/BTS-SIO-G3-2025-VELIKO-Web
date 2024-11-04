@@ -1,0 +1,149 @@
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    background-color: #ffffff;
+}
+
+.header-container {
+    position: relative;
+}
+
+.header-image {
+    width: 100%;
+    height: auto;
+    display: block;
+    margin-bottom: 20px;
+}
+
+.navbar {
+    display: flex;
+    align-items: center; /* Center items vertically */
+    background-color: rgba(255, 255, 255, 0.8);
+    padding: 0;
+    width: 85%;
+    position: absolute;
+    top: 50px;
+    left: 50%;
+    transform: translateX(-50%);
+    border-radius: 10px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    height: 75px;
+}
+
+.navbar-left {
+    display: flex;
+    align-items: center; /* Center items vertically */
+    padding: 5px 10px; /* Adjust padding to move items up */
+}
+
+.navbar a {
+    text-decoration: none;
+    color: #333;
+    padding: 10px;
+    font-size: 14px;
+    margin-top: 0px; /* Move the links up by 6px */
+}
+
+.navbar a:hover {
+    color: #4CAF50;
+}
+
+.navbar-right {
+    display: flex;
+    margin-left: auto;
+    align-items: center; /* Center items vertically */
+}
+
+.image {
+    width: 90px;
+    height: auto;
+    margin-top: -6px; /* Move the logo up by 6px */
+}
+
+.connect-button {
+    background-color: #61A3BA;
+    color: white;
+    border: none;
+    cursor: pointer;
+    width: 153px;
+    height: 74px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-top-right-radius: 10px;
+    border-bottom-right-radius: 10px;
+    margin-top: -6px; /* Move the button up by 6px */
+}
+
+.connect-button:hover {
+    background-color: black;
+}
+
+.content {
+    text-align: center;
+    margin-top: 0;
+}
+
+.content-container {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    margin-top: 0;
+    width: 100%;
+    padding: 0 10%;
+}
+
+.info-container, .map-container {
+    text-align: center;
+    width: 40%;
+    padding: 30px;
+    box-sizing: border-box;
+    position: absolute;
+    top: 400px;
+    height: 200px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 20px;
+    border-radius: 10px; /* Add border-radius to round the corners */
+}
+
+.info-container {
+    background-color: #A2C579;
+    left: 5%;
+}
+
+.map-container {
+    background-color: #61A3BA;
+    right: 5%;
+}
+
+.info-container h3, .map-container h3 {
+    color: #000;
+    margin: 0;
+}
+
+.info-container p, .map-container p {
+    color: #000;
+    margin: 0;
+}
+
+.info-button, .redirect-button {
+    background-color: #ffffff;
+    color: #000;
+    border: none;
+    cursor: pointer;
+    padding: 10px 20px;
+    border-radius: 5px;
+    font-size: 16px;
+}
+
+.info-button:hover, .redirect-button:hover {
+    background-color: #f0f0f0;
+}
+
+.redirect-button {
+    margin-top: 30px; /* Add margin to move the button down */
+}

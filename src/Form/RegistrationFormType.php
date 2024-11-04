@@ -13,13 +13,32 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Validator\Constraints\IsTrue;
 use Symfony\Component\Validator\Constraints\Length;
 use Symfony\Component\Validator\Constraints\NotBlank;
+use Symfony\Component\Validator\Constraints\Callback;
+use Symfony\Component\Validator\Context\ExecutionContextInterface;
+use Symfony\Component\Validator\Constraints\Regex;
 
 class RegistrationFormType extends AbstractType
 {
+    private $allowedDomains = [
+        'gmail.com', 'yahoo.com', 'outlook.com', 'hotmail.com', 'icloud.com', 'aol.com',
+        'protonmail.com', 'zoho.com', 'yandex.com', 'mail.com', 'gmx.com', 'me.com',
+        'fastmail.com', 'tutanota.com', 'rocketmail.com', 'msn.com', 'live.com',
+        'comcast.net', 'verizon.net', 'btinternet.com', 'orange.fr', 'wanadoo.fr',
+        'laposte.net', 'sfr.fr', 'free.fr', 'neuf.fr', 'bluewin.ch', 'libero.it',
+        'virginmedia.com', 'sky.com'
+    ];
+
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $builder
-            ->add('email')
+            ->add('email', TextType::class, [
+                'constraints' => [
+                    new NotBlank([
+                        'message' => 'Please enter an email',
+                    ]),
+                    new Callback([$this, 'validateEmailDomain']),
+                ],
+            ])
             ->add('nom', TextType::class, [
                 'constraints' => [
                     new NotBlank([
@@ -36,9 +55,19 @@ class RegistrationFormType extends AbstractType
             ])
             ->add('date_naissance', DateType::class, [
             ])
-            ->add('adresse',TextType::class ,[])
-            ->add('ville',TextType::class,[])
-            ->add('codePostal',TextType::class,[])
+            ->add('adresse', TextType::class, [
+                'constraints' => [
+                    new NotBlank([
+                        'message' => 'Please enter your address',
+                    ]),
+                    new Regex([
+                        'pattern' => '/^\d+\s+.+$/',
+                        'message' => 'The address must start with a number followed by a space and other text.',
+                    ]),
+                ],
+            ])
+            ->add('ville', TextType::class, [])
+            ->add('codePostal', TextType::class, [])
             ->add('agreeTerms', CheckboxType::class, [
                 'mapped' => false,
                 'constraints' => [
@@ -47,7 +76,7 @@ class RegistrationFormType extends AbstractType
                     ]),
                 ],
             ])
-            ->add('password', PasswordType::class, [
+            ->add('plainPassword', PasswordType::class, [
                 'mapped' => false,
                 'attr' => ['autocomplete' => 'new-password'],
                 'constraints' => [
@@ -55,12 +84,31 @@ class RegistrationFormType extends AbstractType
                         'message' => 'Please enter a password',
                     ]),
                     new Length([
-                        'min' => 6,
+                        'min' => 12,
                         'minMessage' => 'Your password should be at least {{ limit }} characters',
                         'max' => 4096,
                     ]),
+                    new Regex([
+                        'pattern' => '/[A-Z]/',
+                        'message' => 'Your password must contain at least one uppercase letter.',
+                    ]),
+                    new Regex([
+                        'pattern' => '/[\W]/',  // \W matches any non-word character (special character)
+                        'message' => 'Your password must contain at least one special character.',
+                    ]),
                 ],
             ]);
+    }
+
+    public function validateEmailDomain($email, ExecutionContextInterface $context): void
+    {
+        $domain = substr(strrchr($email, "@"), 1); // Extraire le domaine de l'email
+
+        if (!in_array($domain, $this->allowedDomains)) {
+            $context->buildViolation('Email domain is not allowed. Please use a valid domain.')
+                ->atPath('email')
+                ->addViolation();
+        }
     }
 
     public function configureOptions(OptionsResolver $resolver): void

@@ -1,0 +1,43 @@
+{% extends "base.html.twig" %}
+    {% block stylesheets %}
+        <link rel="stylesheet" href="css/acceuil.css">
+    {% endblock %}
+{% block content %}
+
+    <div class="header-container">
+        <img class="header-image" src="/image/young-adult-using-bike-travel-cityy.jpg" alt="Image de vélo">
+
+        <div class="navbar">
+            <div class="navbar-left">
+                <img class="image" src="/image/image_no_white_background.png" alt="Logo">
+                <a href="/apropos">À propos de Veliko</a>
+                <a href="/carte">Map</a>
+                <a href="#">Contacter Veliko</a>
+                <a href="/user">Mon compte</a>
+            </div>
+            <div class="navbar-right">
+                <a href="/register" class="connect-button">Se connecter</a>
+            </div>
+        </div>
+    </div>
+
+    <div class="content-container">
+        <div class="info-container">
+            <h3>A savoir sur Veliko</h3>
+            <p>Découvrez qui nous sommes et comment nous vous aidons à mieux vous déplacer en ville.</p>
+            <button class="info-button" onclick="window.location.href='/apropos'">En savoir plus</button>
+        </div>
+
+        <div class="map-container">
+            <h3>Carte des stations</h3>
+            <p>Trouvez facilement la station la plus proche pour commencer votre trajet.</p>
+            <button class="redirect-button" onclick="window.location.href='/'">Vers la carte</button>
+        </div>
+    </div>
+
+    <footer>
+        <div style="text-align: center; padding: 20px; background-color: #f8f8f8;">
+            <p>&copy; 2024 Veliko - Tous droits réservés.</p>
+        </div>
+    </footer>
+{% endblock %}
