@@ -115,8 +115,10 @@ class UserController extends AbstractController
 
 
     //supprimer compte
+
+    //supprimer compte
     #[Route('/user/deleteAccount/{id}', name: 'user.delete' ,methods: 'POST')]
-    public function deleteAccount(User $user, Security $security, EntityManagerInterface $manager , Request $request): Response
+    public function deleteAccount(User $user, EntityManagerInterface $manager , Request $request): Response
     {
         // Vérifier si l'utilisateur est connecté
         if (!$this->getUser()) {
@@ -133,12 +135,15 @@ class UserController extends AbstractController
             throw $this->createAccessDeniedException('Invalid CSRF token.');
         }
 
+        $randomNumber = random_int(0, 99999);
+        $randomLettre = chr(random_int(97, 122));
+        $randomMdp = str_shuffle($randomLettre . $randomNumber);
 
-        // Désactiver le compte
-        $user->setActive(false);
         $user->setEmail("anonymous" . $user->getId() . "@veliko.lan");
         $user->setNom("anonymous");
         $user->setPrenom("anonymous");
+        $user->setPassword(password_hash($randomMdp, PASSWORD_BCRYPT));
+
         $manager->flush();
 
         // Ajouter un message flash pour informer de la suppression réussie
@@ -149,4 +154,5 @@ class UserController extends AbstractController
         // Rediriger vers la page de connexion
         return $this->redirectToRoute('app_logout');
     }
+
 }

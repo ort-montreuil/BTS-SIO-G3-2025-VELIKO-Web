@@ -55,8 +55,6 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     #[ORM\Column(length: 255)]
     private ?string $codePostal = null;
 
-    #[ORM\Column]
-    private ?bool $isActive = true;
 
     public function getId(): ?int
     {
@@ -205,16 +203,5 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
         return $this;
     }
 
-    public function isActive(): ?bool
-    {
-        return $this->isActive;
-    }
-
-    public function setActive(bool $isActive): static
-    {
-        $this->isActive = $isActive;
-
-        return $this;
-    }
 
 }
