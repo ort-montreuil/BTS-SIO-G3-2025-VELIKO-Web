@@ -7,6 +7,7 @@ use App\Form\UserPasswordType;
 use App\Form\UserType;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Bundle\SecurityBundle\Security;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
@@ -22,7 +23,7 @@ class UserController extends AbstractController
             return $this->redirectToRoute('app_login'); // Redirigez vers la page de connexion
         }
 
-        return $this->render('user/index.html.twig', [
+        return $this->render('user/profile.html.twig', [
             'controller_name' => 'UserController',
         ]);
     }
@@ -93,7 +94,65 @@ class UserController extends AbstractController
             'form' => $form->createView(), // Passe le formulaire à la vue
         ]);
     }
+    //confirmation supprimer compte
+    #[Route('/user/deleteConfirmation/{id}', name: 'user.deleteConfirmation')]
+    public function deleteConfirmation(User $user): Response
+    {
+        // Vérifier si l'utilisateur est connecté
+        if (!$this->getUser()) {
+            return $this->redirectToRoute('app_login');
+        }
+
+        // Vérifier si l'utilisateur connecté est le même que celui à supprimer
+        if ($this->getUser() !== $user) {
+            return $this->redirectToRoute('app_home');
+        }
+
+        return $this->render('user/deleteConfirmation.html.twig', [
+            'user' => $user,
+        ]);
+    }
+
+
+    //supprimer compte
+
+    //supprimer compte
+    #[Route('/user/deleteAccount/{id}', name: 'user.delete' ,methods: 'POST')]
+    public function deleteAccount(User $user, EntityManagerInterface $manager , Request $request): Response
+    {
+        // Vérifier si l'utilisateur est connecté
+        if (!$this->getUser()) {
+            return $this->redirectToRoute('app_login');
+        }
+
+        // Vérifier si l'utilisateur connecté est le même que celui à supprimer
+        if ($this->getUser() !== $user) {
+            return $this->redirectToRoute('app_home');
+        }
+
+        //verifier token
+        if (!$this->isCsrfTokenValid('delete' . $user->getId(), $request->request->get('_token'))) {
+            throw $this->createAccessDeniedException('Invalid CSRF token.');
+        }
+
+        $randomNumber = random_int(0, 99999);
+        $randomLettre = chr(random_int(97, 122));
+        $randomMdp = str_shuffle($randomLettre . $randomNumber);
+
+        $user->setEmail("anonymous" . $user->getId() . "@veliko.lan");
+        $user->setNom("anonymous");
+        $user->setPrenom("anonymous");
+        $user->setPassword(password_hash($randomMdp, PASSWORD_BCRYPT));
+
+        $manager->flush();
+
+        // Ajouter un message flash pour informer de la suppression réussie
+        $this->addFlash('success', 'Votre compte a été supprimé avec succès.');
+
+
+
+        // Rediriger vers la page de connexion
+        return $this->redirectToRoute('app_logout');
+    }
+
 }
-
-
-

@@ -51,8 +51,10 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     #[ORM\Column(length: 100)]
     private ?string $adresse = null;
 
+
     #[ORM\Column(length: 255)]
     private ?string $codePostal = null;
+
 
     public function getId(): ?int
     {
@@ -176,9 +178,6 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
         return $this;
     }
 
-
-
-
     public function getAdresse(): ?string
     {
         return $this->adresse;
@@ -191,6 +190,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
         return $this;
     }
 
+
     public function getCodePostal(): ?string
     {
         return $this->codePostal;
@@ -202,4 +202,6 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
 
         return $this;
     }
+
+
 }
