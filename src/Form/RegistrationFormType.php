@@ -3,6 +3,7 @@
 namespace App\Form;
 
 use App\Entity\User;
+use App\Controller\RegistrationController;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
 use Symfony\Component\Form\Extension\Core\Type\DateType;
@@ -76,25 +77,12 @@ class RegistrationFormType extends AbstractType
                     ]),
                 ],
             ])
-            ->add('plainPassword', PasswordType::class, [
+            ->add('password', PasswordType::class, [
                 'mapped' => false,
                 'attr' => ['autocomplete' => 'new-password'],
                 'constraints' => [
                     new NotBlank([
-                        'message' => 'Please enter a password',
-                    ]),
-                    new Length([
-                        'min' => 12,
-                        'minMessage' => 'Your password should be at least {{ limit }} characters',
-                        'max' => 4096,
-                    ]),
-                    new Regex([
-                        'pattern' => '/[A-Z]/',
-                        'message' => 'Your password must contain at least one uppercase letter.',
-                    ]),
-                    new Regex([
-                        'pattern' => '/[\W]/',  // \W matches any non-word character (special character)
-                        'message' => 'Your password must contain at least one special character.',
+                        'message' => 'Entrer un mot de passe',
                     ]),
                 ],
             ]);

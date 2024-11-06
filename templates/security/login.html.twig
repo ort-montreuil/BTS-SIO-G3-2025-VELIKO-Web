@@ -2,7 +2,12 @@
 
 {% block title %}Log in!{% endblock %}
 
-{% block body %}
+{% block stylesheets %}
+    {{ parent() }}
+    <link rel="stylesheet" href="{{ asset('css/login.css') }}">
+{% endblock %}
+
+{% block content %}
     <form method="post">
         {% if error %}
             <div class="alert alert-danger">{{ error.messageKey|trans(error.messageData, 'security') }}</div>
@@ -14,7 +19,9 @@
             </div>
         {% endif %}
 
-        <img class="image" src="image/image_no_white_background.png">
+        <!--pas de besoin de formulaire car la page connecter est une utilisation simple
+         sans besoin de creer un formulaire !-->
+
         <h1 class="h3 mb-3 font-weight-normal">Se connecter :</h1>
         <label for="username">Email</label>
         <input type="email" value="{{ last_username }}" name="_username" id="username" class="form-control" autocomplete="email" required autofocus>

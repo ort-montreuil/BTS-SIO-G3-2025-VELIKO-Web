@@ -2,9 +2,12 @@
 
 {% block title %}À propos de Veliko{% endblock %}
 
+{% block stylesheets %}
+    {{ parent() }} {# Inclut les styles de base #}
+    <link rel="stylesheet" href="{{ asset('css/aPropos.css') }}">
+{% endblock %}
 
 {% block content %}
-
     <div id="about-section">
         <h2>À propos de Veliko</h2>
         <p>
@@ -31,9 +34,5 @@
                 <li>Record de 212 000 trajets en une journée (10 octobre 2022)</li>
             </ul>
         </div>
-    </div>
-
-    <div class="footer">
-        <p>© 2024 Veliko. Tous droits réservés.</p>
     </div>
 {% endblock %}

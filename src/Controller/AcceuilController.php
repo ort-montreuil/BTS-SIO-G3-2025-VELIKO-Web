@@ -8,11 +8,11 @@ use Symfony\Component\Routing\Attribute\Route;
 
 class AcceuilController extends AbstractController
 {
-    #[Route('/', name: 'app_acceuil')]
+    #[Route('/', name: 'app_accueil')]
     public function index(): Response
     {
-        return $this->render('acceuil/index.html.twig', [
-            'controller_name' => 'AcceuilController',
+        return $this->render('accueil/index.html.twig', [
+            'controller_name' => 'AccueilController',
         ]);
     }
 }

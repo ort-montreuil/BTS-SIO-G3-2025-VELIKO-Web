@@ -1,9 +1,8 @@
 
-
 /* Section À propos */
 #about-section {
     padding: 50px;
-    background-color: #fff;
+    background-color: #ffffff;
     text-align: center;
 }
 
@@ -60,17 +59,3 @@
     100% { opacity: 1; transform: translateX(0); }
 }
 
-/* Footer */
-.footer {
-    background-color: #0071c5;
-    color: white;
-    padding: 20px;
-    text-align: center;
-    position: relative;
-    bottom: 0;
-    width: 100%;
-}
-
-.footer p {
-    margin: 0;
-}

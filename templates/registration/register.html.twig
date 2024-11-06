@@ -2,7 +2,12 @@
 
 {% block title %}S'inscrire{% endblock %}
 
-{% block body %}
+{% block stylesheets %}
+    {{ parent() }}
+    <link rel="stylesheet" href="{{ asset('css/register.css') }}">
+{% endblock %}
+
+{% block content%}
     <h1 class="mb-4">S'inscrire :</h1>
 
     {{ form_start(registrationForm, {'attr': {'class': 'needs-validation', 'novalidate': 'novalidate'}}) }}
@@ -42,6 +47,12 @@
         }) }}
     </div>
 
+    <div class="mb-3">
+        {{ form_row(registrationForm.codePostal, {
+            'attr': {'class': 'form-control'},
+            'label': 'Code Postal'
+        }) }}
+    </div>
 
     <div class="mb-3">
         {{ form_row(registrationForm.ville, {
@@ -51,19 +62,11 @@
     </div>
 
     <div class="mb-3">
-        {{ form_row(registrationForm.codePostal, {
-            'attr': {'class': 'form-control'},
-            'label': 'Code Postal'
-        }) }}
-    </div>
-
-    <div class="mb-3">
         {{ form_row(registrationForm.password, {
             'attr': {'class': 'form-control'},
             'label': 'Mot de Passe'
         }) }}
     </div>
-
 
     <div class="mb-3 form-check">
         {{ form_row(registrationForm.agreeTerms, {
@@ -76,5 +79,9 @@
     <button type="submit" class="btn btn-lg btn-primary">S'inscrire</button>
 
     {{ form_end(registrationForm) }}
+
+
+
+
 
 {% endblock %}

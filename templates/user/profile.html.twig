@@ -2,7 +2,7 @@
 
 {% block title %}Profil de {{ app.user.prenom }} {{ app.user.nom }} :{% endblock %}
 
-{% block body %}
+{% block content%}
     <div class="col-xs4"><h3>Profil de {{ app.user.prenom }} {{ app.user.nom }} :</h3></div>
     {# Affichage des messages flash #}
     {% for message in app.session.flashBag.get('success') %}

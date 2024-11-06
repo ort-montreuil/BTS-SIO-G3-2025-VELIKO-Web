@@ -56,6 +56,13 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     private ?string $codePostal = null;
 
 
+    #[ORM\Column]
+    private ?bool $isVerified = false;
+
+    #[ORM\Column(length: 255, nullable: true)]
+    private ?string $token = null;
+
+
     public function getId(): ?int
     {
         return $this->id;
@@ -199,6 +206,31 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     public function setCodePostal(string $codePostal): static
     {
         $this->codePostal = $codePostal;
+
+        return $this;
+    }
+
+
+    public function isVerified(): ?bool
+    {
+        return $this->isVerified;
+    }
+
+    public function setVerified(bool $isVerified): static
+    {
+        $this->isVerified = $isVerified;
+
+        return $this;
+    }
+
+    public function getToken(): ?string
+    {
+        return $this->token;
+    }
+
+    public function setToken(?string $token): static
+    {
+        $this->token = $token;
 
         return $this;
     }

@@ -2,7 +2,7 @@
 
 namespace App\Controller;
 
-use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\Routing\Attribute\Route;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
@@ -14,7 +14,6 @@ class HomeController extends AbstractController
         $curl = curl_init();
 
         curl_setopt_array($curl, [
-            CURLOPT_PORT => $_ENV["API_VELIKO_PORT"],
             CURLOPT_URL => $_ENV["API_VELIKO_URL"] . "/api/stations",
             CURLOPT_RETURNTRANSFER => true,
             CURLOPT_MAXREDIRS => 10,
@@ -38,8 +37,7 @@ class HomeController extends AbstractController
         $curl2 = curl_init();
 
         curl_setopt_array($curl2, [
-            CURLOPT_PORT => $_ENV["API_VELIKO_PORT"],
-            CURLOPT_URL => $_ENV["API_VELIKO_URL"] . "/api/stations",
+            CURLOPT_URL => $_ENV["API_VELIKO_URL"] . "/api/stations/status",
             CURLOPT_RETURNTRANSFER => true,
             CURLOPT_MAXREDIRS => 10,
             CURLOPT_TIMEOUT => 30,
@@ -59,23 +57,29 @@ class HomeController extends AbstractController
         } else {
             $status = json_decode($status, true);
         }
+        $stationData = [];//tableau vide pour inserer tt les donnees des deux urls
 
-        $stationData = [];
 
+        //cette boucle parcourt chaque element dans le 1e tableau response (1er url)  et chaque element represente les infos de la station du 1er url
         foreach ($response as $stationInfos) {
+            //cette boucle parcourt chaque element dans le 2e tableau status(2e url) et chaque element represente les infos de status cad (2e url)
             foreach ($status as $statusInfos) {
+                //si les numeros des stations des 2 urls sont les memes alors
                 if ($statusInfos['station_id'] == $stationInfos['station_id']) {
+                    //on cree un tableau status data où l'on va stocker toutes les donnees qu'on a besoin que ce soit dans le 1e url ou 2e url
                     $statusData = [
                         'nom' => $stationInfos['name'],
                         'lat' => $stationInfos['lat'],
                         'lon' => $stationInfos['lon'],
-                        'numBikesAvailable' => $statusInfos['num_bikes_available'] ?? 0,
-                        'veloMecanique' => $statusInfos['num_bikes_available_types'][0]['mechanical'] ?? 0,
-                        'veloElectrique' => $statusInfos['num_bikes_available_types'][1]['ebike'] ?? 0,
+                        'numBikesAvailable' => $statusInfos["num_bikes_available"],
+                        'veloMecanique' => $statusInfos["num_bikes_available_types"][0]['mechanical'],
+                        'veloElectrique' => $statusInfos["num_bikes_available_types"][1]['ebike']
                     ];
+                    //on ajoute au tableau vide , celui de depart , toute les donnees qui sont dans le tableau statusdata
                     $stationData[] = $statusData;
                 }
             }
+
         }
 
         return $this->render('home/home.html.twig', [

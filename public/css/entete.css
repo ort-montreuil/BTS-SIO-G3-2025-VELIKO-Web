@@ -7,9 +7,15 @@ body {
 .navbar {
     display: flex;
     justify-content: space-between;
+    align-items: center;
     background-color: #fff;
     padding: 10px 20px;
     border-bottom: 2px solid #e0e0e0;
+}
+
+.navbar-left {
+    display: flex;
+    align-items: center;
 }
 
 .navbar a {
@@ -47,12 +53,9 @@ body {
 .connect-button:hover, .signup-button:hover {
     background-color: #005f99;
 }
+
 .image
 {
-    width: 80px;
+    width: 100%;
     height: auto;
-    padding-bottom: 10px;
-}
-.signup-container button:hover {
-    background-color: #005f99;
 }

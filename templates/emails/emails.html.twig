@@ -1,0 +1,4 @@
+<h1>Activez votre compte</h1>
+<p>Bonjour {{ user.nom }}</p>
+<p>Votre inscription sur le site Veliko est à valider en cliquant sur le lien ci-dessous :</p>
+<p><a href="{{ absolute_url(path('app_active', { 'token': token })) }}">Activer mon compte</a></p>
