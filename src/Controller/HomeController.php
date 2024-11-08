@@ -2,12 +2,20 @@
 
 namespace App\Controller;
 
+use App\Entity\StationUser;
+use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\Routing\Attribute\Route;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
 class HomeController extends AbstractController
 {
+    private EntityManagerInterface $entityManager;
+
+    public function __construct(EntityManagerInterface $entityManager)
+    {
+        $this->entityManager = $entityManager;
+    }
     #[Route('/carte', name: 'app_home')]
     public function home(): Response
     {
@@ -68,6 +76,7 @@ class HomeController extends AbstractController
                 if ($statusInfos['station_id'] == $stationInfos['station_id']) {
                     //on cree un tableau status data où l'on va stocker toutes les donnees qu'on a besoin que ce soit dans le 1e url ou 2e url
                     $statusData = [
+                        'id' => $stationInfos['station_id'],
                         'nom' => $stationInfos['name'],
                         'lat' => $stationInfos['lat'],
                         'lon' => $stationInfos['lon'],
@@ -81,10 +90,22 @@ class HomeController extends AbstractController
             }
 
         }
+        $user = $this->getUser();
+        $favoriteStationIds = [];
 
+        if ($user) {
+            $stationUserRepository = $this->entityManager->getRepository(StationUser::class);
+
+            // Obtenir les stations favorites de l'utilisateur
+            $favorites = $stationUserRepository->findBy(['idUser' => $user->getId()]);
+            $favoriteStationIds = array_map(function ($favorite) {
+                return $favorite->getIdStation();
+            }, $favorites);
+        }
         return $this->render('home/home.html.twig', [
             'titre' => '',
             'stationData' => $stationData,
+            'favoriteStationIds' => $favoriteStationIds
         ]);
     }
 }

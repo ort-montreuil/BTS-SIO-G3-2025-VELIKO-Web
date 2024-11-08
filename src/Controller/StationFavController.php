@@ -2,8 +2,13 @@
 
 namespace App\Controller;
 
+use App\Entity\Station;
 use App\Entity\StationUser;
+use App\Entity\User;
 use App\Repository\StationRepository;
+use App\Repository\StationUserRepository;
+use App\Repository\UserRepository;
+use Doctrine\DBAL\Exception\DatabaseDoesNotExist;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
@@ -13,17 +18,27 @@ use Symfony\Component\Routing\Annotation\Route;
 class StationFavController extends AbstractController
 {
     private EntityManagerInterface $entityManager;
+    private UserRepository $userRepository;
     private StationRepository $stationRepository;
+    private StationUserRepository $stationUserRepository;
 
-    public function __construct(EntityManagerInterface $entityManager, StationRepository $stationRepository)
-    {
+    public function __construct(
+        EntityManagerInterface $entityManager,
+        UserRepository $userRepository,
+        StationRepository $stationRepository,
+        StationUserRepository $stationUserRepository
+    ) {
         $this->entityManager = $entityManager;
+        $this->userRepository = $userRepository;
         $this->stationRepository = $stationRepository;
+        $this->stationUserRepository = $stationUserRepository;
     }
 
     #[Route('/mes/stations', name: 'app_mes_stations')]
     public function index(): Response
     {
+        $stations1 = $this->stationRepository->findAll();
+
         // Récupérer l'utilisateur connecté
         /** @var User $user */ //sans cela, $user n'est pas reconnu comme un objet de la classe "User"
         $user = $this->getUser();
@@ -32,20 +47,26 @@ class StationFavController extends AbstractController
         $stationUserRepository = $this->entityManager->getRepository(StationUser::class);
 
         $stationNames = [];
-        for ($i = 0; $i < count($stationUserRepository->findStationsByUserId($userId)); $i++) {
-            $idStation = $stationUserRepository->findStationsByUserId($userId)[$i]["idStation"];
+        $stations = $stationUserRepository->findStationsByUserId($userId);
+
+        foreach ($stations as $station) {
+            $idStation = $station["idStation"];
             $stationName = $stationUserRepository->findStationNameById($idStation)[0]["name"];
             $stationNames[] = [
                 'name' => $stationName,
                 'id' => $idStation
             ];
+
         }
 
         return $this->render('station_fav/index.html.twig', [
-            'controller_name' => 'MesStationsController',
-            'station_names' => $stationNames
+            'controller_name' => 'StationFavController',
+            'station_names' => $stationNames,
+            'stations1' => $stations1
+
         ]);
     }
+
     #[Route('/station/delete/{id}', name: 'app_station_delete', methods: ['POST'])]
     public function delete(int $id, Request $request): Response
     {
@@ -71,29 +92,33 @@ class StationFavController extends AbstractController
         return $this->redirectToRoute('app_mes_stations');
 
     }
+
     #[Route('/station/add_favorite/{id}', name: 'app_add_favorite', methods: ['POST'])]
-    public function addFavorite(int $id, Request $request): Response
+    public function addFavorite(int $id): Response
     {
         /** @var User $user */
         $user = $this->getUser();
         $userId = $user->getId();
 
-        $station = $this->stationRepository->find($id);
+        // Vérifier si la station est déjà dans les favoris de l'utilisateur
+        $stationUserRepository = $this->entityManager->getRepository(StationUser::class);
+        $existingFavorite = $stationUserRepository->findOneBy([
+            'idUser' => $userId,
+            'idStation' => $id,
+        ]);
 
-        if ($station) {
+        if ($existingFavorite) {
+            $this->addFlash('info', 'Station déjà dans les favoris.');
+        } else {
             $stationUser = new StationUser();
-            $stationUser->setIdStation($id);
             $stationUser->setIdUser($userId);
+            $stationUser->setIdStation($id);
 
             $this->entityManager->persist($stationUser);
             $this->entityManager->flush();
 
-            $this->addFlash('success', 'Station added to favorites.');
-        } else {
-            $this->addFlash('error', 'Station not found.');
+            $this->addFlash('success', 'Station ajoutée aux favoris.');
         }
-
         return $this->redirectToRoute('app_mes_stations');
     }
-
 }

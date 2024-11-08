@@ -75,7 +75,18 @@
             marker.bindPopup("Nom station : {{ station.nom }}" +
                 "<br> Nombre de vélos disponibles : {{ station.numBikesAvailable }}" +
                 "<br> Vélo Mécanique : {{ station.veloMecanique }}" +
-                "<br> Vélo Électrique : {{ station.veloElectrique }}");
+                "<br> Vélo Électrique : {{ station.veloElectrique }}" +
+                '{% if app.user %}' +
+                '{% if station.id in favoriteStationIds %}' +
+                '<form action="{{ path('app_station_delete', {'id': station.id}) }}" method="post">' +
+                '<button type="submit">Retirer des favoris</button>' +
+                '</form>' +
+                '{% else %}' +
+                '<form action="{{ path('app_add_favorite', {'id': station.id}) }}" method="post">' +
+                '<button type="submit">Ajouter aux favoris</button>' +
+                '</form>' +
+                '{% endif %}' +
+                '{% endif %}');
             markerClusters.addLayer(marker);
             {% endfor %}
 

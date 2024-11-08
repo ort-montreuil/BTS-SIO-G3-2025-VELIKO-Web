@@ -5,10 +5,16 @@ namespace App\Repository;
 use App\Entity\Station;
 use App\Entity\StationUser;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
+use Doctrine\ORM\Query\AST\Join;
 use Doctrine\Persistence\ManagerRegistry;
 
 /**
  * @extends ServiceEntityRepository<StationUser>
+ *
+ * @method StationUser|null find($id, $lockMode = null, $lockVersion = null)
+ * @method StationUser|null findOneBy(array $criteria, array $orderBy = null)
+ * @method StationUser[]    findAll()
+ * @method StationUser[]    findBy(array $criteria, array $orderBy = null, $limit = null, $offset = null)
  */
 class StationUserRepository extends ServiceEntityRepository
 {
@@ -16,7 +22,9 @@ class StationUserRepository extends ServiceEntityRepository
     {
         parent::__construct($registry, StationUser::class);
     }
-    public function findStationsByUserId(int $userId)
+
+    // Add custom methods here
+    public function findStationsByUserId(int $userId): array
     {
         return $this->createQueryBuilder('su')
             ->select("su.idStation")
@@ -45,6 +53,10 @@ class StationUserRepository extends ServiceEntityRepository
             ->getQuery()
             ->execute();
     }
+
+
+
+
 //    /**
 //     * @return StationUser[] Returns an array of StationUser objects
 //     */

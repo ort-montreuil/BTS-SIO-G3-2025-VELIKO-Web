@@ -2,8 +2,10 @@
 
 namespace App\Repository;
 
+use App\Entity\Station;
 use App\Entity\User;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
+use Doctrine\ORM\Query\AST\Join;
 use Doctrine\Persistence\ManagerRegistry;
 use Symfony\Component\Security\Core\Exception\UnsupportedUserException;
 use Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface;
@@ -19,9 +21,30 @@ class UserRepository extends ServiceEntityRepository implements PasswordUpgrader
         parent::__construct($registry, User::class);
     }
 
-    /**
-     * Used to upgrade (rehash) the user's password automatically over time.
-     */
+
+    // Comprendre : https://symfonycasts.com/screencast/doctrine-queries/query-builder
+    public function findAllUsers(): array
+    {
+        return $this->createQueryBuilder('user')
+
+            ->getQuery()
+            ->getResult();
+
+//        $dql = 'SELECT user FROM App\Entity\User as user';
+//        $query = $this->getEntityManager()->createQuery($dql);
+//        return $query->getResult();
+    }    /**
+ * Used to upgrade (rehash) the user's password automatically over time.
+ */
+
+    public function getIdUser(User $user)
+    {
+        return $this->createQueryBuilder("user")
+            ->andWhere("user.id = :userId")
+            ->setParameter("userId", $user->getId())
+            ->getQuery()
+            ->getResult();
+    }
     public function upgradePassword(PasswordAuthenticatedUserInterface $user, string $newHashedPassword): void
     {
         if (!$user instanceof User) {
