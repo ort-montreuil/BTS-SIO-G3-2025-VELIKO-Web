@@ -19,16 +19,26 @@ class StationFavController extends AbstractController
 {
     private EntityManagerInterface $entityManager;
     private UserRepository $userRepository;
-    public function __construct(EntityManagerInterface $entityManager, UserRepository $userRepository)
-    {
+    private StationRepository $stationRepository;
+    private StationUserRepository $stationUserRepository;
+
+    public function __construct(
+        EntityManagerInterface $entityManager,
+        UserRepository $userRepository,
+        StationRepository $stationRepository,
+        StationUserRepository $stationUserRepository
+    ) {
         $this->entityManager = $entityManager;
         $this->userRepository = $userRepository;
+        $this->stationRepository = $stationRepository;
+        $this->stationUserRepository = $stationUserRepository;
     }
-
 
     #[Route('/mes/stations', name: 'app_mes_stations')]
     public function index(): Response
     {
+        $stations1 = $this->stationRepository->findAll();
+
         // Récupérer l'utilisateur connecté
         /** @var User $user */ //sans cela, $user n'est pas reconnu comme un objet de la classe "User"
         $user = $this->getUser();
@@ -46,11 +56,14 @@ class StationFavController extends AbstractController
                 'name' => $stationName,
                 'id' => $idStation
             ];
+
         }
 
         return $this->render('station_fav/index.html.twig', [
             'controller_name' => 'StationFavController',
-            'station_names' => $stationNames
+            'station_names' => $stationNames,
+            'stations1' => $stations1
+
         ]);
     }
 

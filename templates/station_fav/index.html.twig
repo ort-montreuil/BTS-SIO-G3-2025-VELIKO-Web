@@ -17,4 +17,20 @@
             {% endfor %}
         </div>
     </div>
+    <div>
+        <h2>Les stations</h2>
+        <div class="station-list">
+            {% for stations in stations1 %}
+                <div class="station-item">
+                    <div class="station-info">
+                        <h3>{{ stations.name }}</h3>
+                    </div>
+                    <form action="{{ path('app_add_favorite', {'id': stations.getStationId()}) }}" method="post">
+                        <button type="submit" class="favorite-btn">Mettre en favoris</button>
+                    </form>
+                </div>
+            {% endfor %}
+
+        </div>
+    </div>
 {% endblock %}
