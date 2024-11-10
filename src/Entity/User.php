@@ -52,6 +52,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     private ?string $prenom = null;
 
     #[ORM\Column(type: Types::DATE_MUTABLE)]
+    #[Assert\NotBlank(message: 'Entrer une date de naissance')]
     private ?\DateTimeInterface $date_naissance = null;
 
 

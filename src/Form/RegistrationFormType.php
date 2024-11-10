@@ -66,9 +66,6 @@ class RegistrationFormType extends AbstractType
                 'mapped' => false,
                 'attr' => ['autocomplete' => 'new-password'],
                 'constraints' => [
-                    new NotBlank([
-                        'message' => 'Entrer un mot de passe',
-                    ]),
                     new Regex([
                         'pattern' => '/[A-Z]/',
                         'message' => 'Votre mot de passe doit contenir au moins une lettre majuscule',
@@ -94,7 +91,7 @@ class RegistrationFormType extends AbstractType
         $domain = substr(strrchr($email, "@"), 1); // Extraire le domaine de l'email
 
         if (!in_array($domain, $this->allowedDomains)) {
-            $context->buildViolation('Email domain is not allowed. Please use a valid domain.')
+            $context->buildViolation('Le nom du domaine n\'est pas valide.')
                 ->atPath('email')
                 ->addViolation();
         }
