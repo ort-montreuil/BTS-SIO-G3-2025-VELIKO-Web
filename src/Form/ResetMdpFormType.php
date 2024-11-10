@@ -34,9 +34,6 @@ class ResetMdpFormType extends AbstractType
                         'class' => 'form-label mt-4',
                     ],
                     'constraints' => [
-                        new NotBlank([
-                            'message' => 'Entrer un mot de passe',
-                        ]),
                         new Regex([
                             'pattern' => '/[A-Z]/',
                             'message' => 'Votre mot de passe doit contenir au moins une lettre majuscule',
@@ -53,11 +50,7 @@ class ResetMdpFormType extends AbstractType
                             'pattern' => '/[\W]/',
                             'message' => 'Votre mot de passe doit contenir au moins un caractère spécial',
                         ]),
-                        new Length([
-                            'min' => 12,
-                            'minMessage' => 'Votre mot de passe doit contenir au moins {{ limit }} caractères',
-                            'max' => 4096,
-                        ]),
+
                     ],
                 ],
                 'second_options' => [
