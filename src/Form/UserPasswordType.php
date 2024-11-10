@@ -10,6 +10,7 @@ use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Validator\Constraints\Length;
 use Symfony\Component\Validator\Constraints\NotBlank;
+use Symfony\Component\Validator\Constraints\Regex;
 
 class UserPasswordType extends AbstractType
 {
@@ -36,14 +37,33 @@ class UserPasswordType extends AbstractType
                         'class' => 'form-control',
                         'placeholder' => 'Nouveau mot de passe',
                     ],
-                    'label' => 'Nouveau password',
+                    'label' => 'NOUVEAU MOT DE PASSE',
                     'label_attr' => [
                         'class' => 'form-label mt-4',
                     ],
-                    'constraints' => [ // Correction ici
+                    'constraints' => [
+                        new NotBlank([
+                            'message' => 'Entrer un mot de passe',
+                        ]),
+                        new Regex([
+                            'pattern' => '/[A-Z]/',
+                            'message' => 'Votre mot de passe doit contenir au moins une lettre majuscule',
+                        ]),
+                        new Regex([
+                            'pattern' => '/[a-z]/',
+                            'message' => 'Votre mot de passe doit contenir au moins une lettre minuscule',
+                        ]),
+                        new Regex([
+                            'pattern' => '/\d/',
+                            'message' => 'Votre mot de passe doit contenir au moins un chiffre',
+                        ]),
+                        new Regex([
+                            'pattern' => '/[\W]/',
+                            'message' => 'Votre mot de passe doit contenir au moins un caractère spécial',
+                        ]),
                         new Length([
-                            'min' => 6,
-                            'minMessage' => 'Votre mot de passe doit avoir au moins {{ limit }} caractères.',
+                            'min' => 12,
+                            'minMessage' => 'Votre mot de passe doit contenir au moins {{ limit }} caractères',
                             'max' => 4096,
                         ]),
                     ],

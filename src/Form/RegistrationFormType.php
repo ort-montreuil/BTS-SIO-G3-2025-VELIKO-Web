@@ -44,33 +44,56 @@ class RegistrationFormType extends AbstractType
             ->add('nom', TextType::class, [
                 'constraints' => [
                     new NotBlank([
-                        'message' => 'Please enter your name',
+                        'message' => 'Entrer votre nom',
                     ]),
                 ],
             ])
             ->add('prenom', TextType::class, [
-
+                new NotBlank([
+                    'message' => 'Entrer votre prenom',
+                ]),
             ])
-            ->add('date_naissance', DateType::class, [
+            ->add('date_naissance', DateType::class, [   new NotBlank([
+                'message' => 'Entrer une date de naissance',
+            ]),
             ])
             ->add('adresse', TextType::class, [
                 'constraints' => [
                     new NotBlank([
-                        'message' => 'Please enter your address',
+                        'message' => 'Entrer une adresse',
                     ]),
                     new Regex([
                         'pattern' => '/^\d+\s+.+$/',
-                        'message' => 'The address must start with a number followed by a space and other text.',
+                        'message' => 'Entrer une adresse valide commencant par un numero',
                     ]),
                 ],
             ])
-            ->add('ville', TextType::class, [])
-            ->add('codePostal', TextType::class, [])
+            ->add('ville', TextType::class, [
+                'constraints' => [
+                    new NotBlank([
+                        'message' => 'Entrer une ville',
+                    ]),
+                ],
+            ])
+
+            ->add('codePostal', TextType::class, [
+                'constraints' => [
+                    new NotBlank([
+                        'message' => 'Entrer un code postal',
+                    ]),
+                    new Length([
+                        'min' => 5,
+                        'max' => 5,
+                        'minMessage' => 'Le code postal doit contenir 5 chiffres',
+                        'maxMessage' => 'Le code postal doit contenir 5 chiffres',
+                    ]),
+                ],
+            ])
             ->add('agreeTerms', CheckboxType::class, [
                 'mapped' => false,
                 'constraints' => [
                     new IsTrue([
-                        'message' => 'You should agree to our terms.',
+                        'message' => 'Vous devez accepter les termes.',
                     ]),
                 ],
             ])
@@ -80,6 +103,27 @@ class RegistrationFormType extends AbstractType
                 'constraints' => [
                     new NotBlank([
                         'message' => 'Entrer un mot de passe',
+                    ]),
+                    new Regex([
+                        'pattern' => '/[A-Z]/',
+                        'message' => 'Votre mot de passe doit contenir au moins une lettre majuscule',
+                    ]),
+                    new Regex([
+                        'pattern' => '/[a-z]/',
+                        'message' => 'Votre mot de passe doit contenir au moins une lettre minuscule',
+                    ]),
+                    new Regex([
+                        'pattern' => '/\d/',
+                        'message' => 'Votre mot de passe doit contenir au moins un chiffre',
+                    ]),
+                    new Regex([
+                        'pattern' => '/[\W]/',
+                        'message' => 'Votre mot de passe doit contenir au moins un caractère spécial',
+                    ]),
+                    new Length([
+                        'min' => 12,
+                        'minMessage' => 'Votre mot de passe doit contenir au moins {{ limit }} caractères',
+                        'max' => 4096,
                     ]),
                 ],
             ]);
