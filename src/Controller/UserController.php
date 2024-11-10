@@ -38,7 +38,7 @@ class UserController extends AbstractController
 
         // Vérifier si l'utilisateur connecté est le même que celui à éditer
         if ($this->getUser() !== $user) {
-            return $this->redirectToRoute('app_home'); // Redirigez vers la page d'accueil
+            return $this->redirectToRoute('app_home'); // Redirigez vers la page d'acceuil
         }
 
         // Créer le formulaire avec l'utilisateur récupéré
