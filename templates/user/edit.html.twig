@@ -2,18 +2,46 @@
 
 {% block title %}Modifier le profil{% endblock %}
 
-{% block content %}
-    <h1>Modifier le profil</h1>
-    {# Affichage des messages flash #}
-    {% for message in app.session.flashBag.get('success') %}
-        <div class="alert alert-success">
-            {{ message }}
+{% block body %}
+    <style>
+        .container {
+            margin: 30px auto;
+            background-color: white;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            width: 80%;
+            max-width: 900px;
+        }
+
+        .content {
+            display: flex; /* Utilisation de Flexbox pour aligner les éléments horizontalement */
+            justify-content: center; /* Centrer les éléments horizontalement */
+            align-items: center; /* Centrer les éléments verticalement */
+            flex-wrap: wrap; /* Permet aux éléments de se réorganiser sur plusieurs lignes si nécessaire */
+            height: 85vh; /* Utiliser toute la hauteur de la page */
+            padding: 20px;
+            box-sizing: border-box;
+            background: url('{{ asset('image/velo-cyclisme-cyclistes.webp') }}') center center no-repeat; /* L'image en fond */
+            background-size: cover; /* L'image prend toute la taille du conteneur */
+        }
+    </style>
+    <div class="content">
+        <div class="container">
+            <h1>Modifier le profil : </h1>
+
+            {% for message in app.session.flashBag.get('success') %}
+                <div class="alert alert-success">
+                    {{ message }}
+                </div>
+            {% endfor %}
+
+            {{ form_start(form) }}
+            {{ form_widget(form) }}
+            <br>
+            <button type="submit" class="btn btn-primary">Enregistrer</button>
+            {{ form_end(form) }}
+
         </div>
-    {% endfor %}
-
-    {{ form_start(form) }}
-    {{ form_widget(form) }}
-    <button type="submit" class="btn btn-primary">Enregistrer</button>
-    {{ form_end(form) }}
-
+    </div>
 {% endblock %}

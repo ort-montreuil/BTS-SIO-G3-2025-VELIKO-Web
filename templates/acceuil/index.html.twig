@@ -1,0 +1,106 @@
+{% extends "base.html.twig" %}
+
+{% block title %}Accueil{% endblock %}
+
+{% block body %}
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+        }
+
+        .content {
+            display: flex;
+            flex-wrap: wrap;  /* Permet aux éléments de passer à la ligne suivante si nécessaire */
+            justify-content: center;  /* Centrer les éléments horizontalement */
+            align-items: center;  /* Centrer les éléments verticalement */
+            gap: 40px;  /* Espacement entre les éléments */
+            height: 90vh;  /* Utiliser toute la hauteur de la page */
+            padding: 20px;
+            box-sizing: border-box;
+            background: url('{{ asset('image/velo-cyclisme-cyclistes.webp') }}') center center no-repeat; /* L'image en fond */
+            background-size: cover;  /* L'image prend toute la taille du conteneur */
+        }
+
+        .info-container, .map-container {
+            width: 45%;  /* Les deux containers prennent 45% de la largeur pour tenir sur la même ligne */
+            padding: 60px;  /* Espacement interne */
+            box-sizing: border-box;
+            border-radius: 10px;
+            color: #000;
+            text-align: center;
+            background-color: rgba(150, 249, 138, 0.8); /* Fond légèrement transparent */
+        }
+
+        .map-container {
+            background-color: rgba(126, 214, 238, 0.8); /* Fond légèrement transparent pour map-container */
+        }
+
+        /* Container de connexion en dessous des deux premiers */
+        .login-container {
+            width: 45%;  /* Largeur du container de connexion */
+            padding: 60px;  /* Espacement interne */
+            box-sizing: border-box;
+            border-radius: 10px;
+            color: #000;
+            text-align: center;
+            background-color: rgba(196, 125, 83, 0.8);  /* Fond légèrement transparent pour login-container */
+
+        }
+
+        /* Boutons */
+        .info-button, .redirect-button, .login-button {
+            background-color: green;
+            color: white;
+            border: none;
+            cursor: pointer;
+            padding: 10px 20px;
+            border-radius: 5px;
+            font-size: 16px;
+            transition: background-color 0.3s ease;
+        }
+
+        .redirect-button {
+            background-color: dodgerblue;
+        }
+
+        .info-button:hover {
+            background-color: dodgerblue;
+        }
+
+        .login-button {
+            background-color: rgba(217, 108, 12, 0.8);
+        }
+
+        .login-button:hover {
+            background-color: rgba(161, 79, 29, 0.8);
+        }
+
+        .redirect-button:hover {
+            background-color: #45a049;
+        }
+
+
+    </style>
+
+    <div class="content">
+        <div class="info-container">
+            <h3>A savoir sur Veliko</h3>
+            <p>Découvrez qui nous sommes et comment nous vous aidons à mieux vous déplacer en ville.</p>
+            <button class="info-button" onclick="window.location.href='/apropos'">En savoir plus</button>
+        </div>
+
+        <div class="map-container">
+            <h3>Carte des stations</h3>
+            <p>Trouvez facilement la station la plus proche pour commencer votre trajet.</p>
+            <button class="redirect-button" onclick="window.location.href='/carte'">Vers la carte</button>
+        </div>
+        <div class="login-container">
+            <h3>Déjà un compte !</h3>
+            <button class="login-button" onclick="window.location.href='/login'">Me connecter</button>
+        </div>
+
+    </div>
+
+{% endblock %}

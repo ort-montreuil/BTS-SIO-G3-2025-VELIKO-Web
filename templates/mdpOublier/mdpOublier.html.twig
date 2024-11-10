@@ -1,0 +1,12 @@
+{% extends 'base.html.twig' %}
+
+{% block content %}
+
+    <h1>Mot de passe oublié ? </h1>
+    <p>Saisie ton adresse e-mail ci-dessous et nous t'enverrons les instructions pour créer un nouveau mot de passe</p>
+    {{ form_start(form) }}
+    {{ form_widget(form) }}
+    <a href="{{ path('app_mdpOublier')}}" class="connect-button btn btn-primary">REINITIALISER LE MOT DE PASSE </a>
+
+    {{ form_end(form) }}
+{% endblock %}

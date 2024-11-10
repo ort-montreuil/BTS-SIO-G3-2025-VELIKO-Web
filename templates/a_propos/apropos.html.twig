@@ -2,37 +2,109 @@
 
 {% block title %}À propos de Veliko{% endblock %}
 
-{% block stylesheets %}
-    {{ parent() }} {# Inclut les styles de base #}
-    <link rel="stylesheet" href="{{ asset('css/aPropos.css') }}">
-{% endblock %}
 
-{% block content %}
-    <div id="about-section">
-        <h2>À propos de Veliko</h2>
-        <p>
-            Veliko est une entreprise innovante dédiée à la mobilité urbaine intelligente. Notre objectif est de faciliter la gestion des
-            vélos en libre-service grâce à une application intuitive qui permet de suivre en temps réel la disponibilité des vélos dans
-            toute la région de Paris.
-        </p>
-        <p>
-            Lancée dans la foulée de l'initiative "Vélib' Métropole", Veliko s'appuie sur l'un des services de vélos partagés les plus performants
-            au monde pour améliorer la mobilité durable dans les grandes villes.
-        </p>
-        <p>
-            Nous croyons fermement que la technologie peut améliorer le quotidien des citadins en facilitant leurs déplacements tout en réduisant
-            leur empreinte carbone.
-        </p>
+{% block body %}
+    <style>
+        .content {
+            display: flex;  /* Utilisation de Flexbox pour aligner les éléments horizontalement */
+            justify-content: center; /* Centrer les éléments horizontalement */
+            align-items: center; /* Centrer les éléments verticalement */
+            flex-wrap: wrap; /* Permet aux éléments de se réorganiser sur plusieurs lignes si nécessaire */
+            height: 90vh; /* Utiliser toute la hauteur de la page */
+            padding: 20px;
+            box-sizing: border-box;
+            background: url('{{ asset('image/velo-cyclisme-cyclistes.webp') }}') center center no-repeat; /* L'image en fond */
+            background-size: cover; /* L'image prend toute la taille du conteneur */
+        }
+        /* Section À propos */
+        #about-section {
+            padding: 50px;
+            background-color: #ffffff;
+            text-align: center;
+        }
 
-        <div class="facts">
-            <h3>Velib' en chiffres :</h3>
-            <ul>
-                <li>Plus de 19 000 vélos disponibles (40% à assistance électrique)</li>
-                <li>1 464 stations réparties à Paris et en Île-de-France</li>
-                <li>390 000 abonnés fidèles en 2022</li>
-                <li>4,7 millions de trajets réalisés en octobre 2022</li>
-                <li>Record de 212 000 trajets en une journée (10 octobre 2022)</li>
-            </ul>
+        #about-section h2 {
+            font-size: 36px;
+            margin-bottom: 20px;
+            position: relative;
+            display: inline-block;
+            animation: fadeIn 1s ease-in-out;
+        }
+
+        #about-section p {
+            font-size: 18px;
+            line-height: 1.6;
+            color: #555;
+            margin-bottom: 20px;
+        }
+
+        #about-section .facts {
+            margin-top: 30px;
+            text-align: left;
+        }
+
+        #about-section .facts ul {
+            list-style-type: none;
+            padding-left: 0;
+        }
+
+        #about-section .facts ul li {
+            font-size: 16px;
+            margin-bottom: 10px;
+            position: relative;
+            padding-left: 20px;
+            animation: slideIn 1.5s ease-in-out;
+        }
+
+        #about-section .facts ul li::before {
+            content: '✔';
+            position: absolute;
+            left: 0;
+            top: 0;
+            color: green;
+        }
+
+        /* Animation pour les titres */
+        @keyframes fadeIn {
+            0% { opacity: 0; transform: translateY(-20px); }
+            100% { opacity: 1; transform: translateY(0); }
+        }
+
+        /* Animation pour les éléments de la liste */
+        @keyframes slideIn {
+            0% { opacity: 0; transform: translateX(-50px); }
+            100% { opacity: 1; transform: translateX(0); }
+        }
+
+    </style>
+
+    <div class="content">
+        <div id="about-section">
+            <h2>À propos de Veliko</h2>
+            <p>
+                Veliko est une entreprise innovante dédiée à la mobilité urbaine intelligente. Notre objectif est de faciliter la gestion des
+                vélos en libre-service grâce à une application intuitive qui permet de suivre en temps réel la disponibilité des vélos dans
+                toute la région de Paris.
+            </p>
+            <p>
+                Lancée dans la foulée de l'initiative "Vélib' Métropole", Veliko s'appuie sur l'un des services de vélos partagés les plus performants
+                au monde pour améliorer la mobilité durable dans les grandes villes.
+            </p>
+            <p>
+                Nous croyons fermement que la technologie peut améliorer le quotidien des citadins en facilitant leurs déplacements tout en réduisant
+                leur empreinte carbone.
+            </p>
+
+            <div class="facts">
+                <h3>Velib' en chiffres :</h3>
+                <ul>
+                    <li>Plus de 19 000 vélos disponibles (40% à assistance électrique)</li>
+                    <li>1 464 stations réparties à Paris et en Île-de-France</li>
+                    <li>390 000 abonnés fidèles en 2022</li>
+                    <li>4,7 millions de trajets réalisés en octobre 2022</li>
+                    <li>Record de 212 000 trajets en une journée (10 octobre 2022)</li>
+                </ul>
+            </div>
         </div>
     </div>
 {% endblock %}
