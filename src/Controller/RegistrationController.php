@@ -31,8 +31,6 @@ class RegistrationController extends AbstractController
         if ($form->isSubmitted() && $form->isValid()) {
             /** @var string $plainPassword */
             $plainPassword = $form->get('password')->getData();
-
-            // encode the plain password
             $user->setPassword($userPasswordHasher->hashPassword($user, $plainPassword));
 
             //sauvegarde user dans bdd
@@ -42,7 +40,6 @@ class RegistrationController extends AbstractController
             //activation Token
             $activationToken = $tokenService->generate();
             $user->setToken($activationToken);
-
 
             $entityManager->persist($user);
             $entityManager->flush();
@@ -76,7 +73,6 @@ class RegistrationController extends AbstractController
 
         // Vérification de l'utilisateur
         $user->setVerified(true);
-        //$user->setToken(null); // Supprime le token après activation
         $entityManager->flush();
 
         // Message de succès et redirection
