@@ -1,7 +1,9 @@
 {
+
     "type": "project",
     "license": "proprietary",
     "minimum-stability": "stable",
+    "version": "2.0.0",
     "prefer-stable": true,
     "require": {
         "php": ">=8.2",
@@ -107,4 +109,5 @@
         "symfony/stopwatch": "6.4.*",
         "symfony/web-profiler-bundle": "6.4.*"
     }
+
 }
