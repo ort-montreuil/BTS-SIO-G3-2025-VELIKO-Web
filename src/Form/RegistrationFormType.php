@@ -63,7 +63,6 @@ class RegistrationFormType extends AbstractType
                 ],
             ])
             ->add('password', PasswordType::class, [
-                'mapped' => false,
                 'attr' => ['autocomplete' => 'new-password'],
                 'constraints' => [
                     new Regex([

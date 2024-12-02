@@ -99,20 +99,22 @@
                         'label': 'Email'
                     }) }}
                 </div>
-
                 <div class="form-group">
-                    {{ form_row(registrationForm.nom, {
+                    {{ form_row(registrationForm.adresse, {
                         'attr': {'class': 'form-control'},
-                        'label': 'Nom'
+                        'label': 'Adresse'
                     }) }}
                 </div>
+
+
+
             </div>
 
             <div class="form-row">
                 <div class="form-group">
-                    {{ form_row(registrationForm.prenom, {
+                    {{ form_row(registrationForm.nom, {
                         'attr': {'class': 'form-control'},
-                        'label': 'Prénom'
+                        'label': 'Nom'
                     }) }}
                 </div>
 
@@ -126,9 +128,9 @@
 
             <div class="form-row">
                 <div class="form-group">
-                    {{ form_row(registrationForm.adresse, {
+                    {{ form_row(registrationForm.prenom, {
                         'attr': {'class': 'form-control'},
-                        'label': 'Adresse'
+                        'label': 'Prénom'
                     }) }}
                 </div>
 

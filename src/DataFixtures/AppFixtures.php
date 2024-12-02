@@ -14,6 +14,7 @@ class AppFixtures extends Fixture
     {
         // $this->hasher = $hasher;
     }
+
     public function load(ObjectManager $manager): void
     {
 
@@ -24,7 +25,7 @@ class AppFixtures extends Fixture
         $user = new User();
         $user->setEmail('toto@dev.com');
         $user->setRoles(['ROLE_ADMIN']);
-        $user->setPassword($this->hasher->hashPassword($user,'Motdepasse123//'));
+        $user->setPassword($this->hasher->hashPassword($user, 'Motdepasse123//'));
         $user->setVerified(1);
         $user->setDateNaissance(new \DateTime('1990-01-01'));
         $user->setAdresse('1 rue de la rue');
@@ -34,9 +35,11 @@ class AppFixtures extends Fixture
         $user->setPrenom('Mr');
         $manager->persist($user);
 
-
         $manager->flush();
     }
+
+
+
 
 
 }

@@ -1,5 +1,5 @@
 
-# Projet Veliko
+# Projet Veliko : DEV 
 
 ## Installation
 
@@ -41,3 +41,4 @@ Démarrer le serveur Symfony :
 ```bash
 symfony serve:start
 ```
+
