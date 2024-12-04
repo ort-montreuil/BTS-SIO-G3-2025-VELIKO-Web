@@ -15,7 +15,13 @@ class UserChecker implements UserCheckerInterface
         }
         if (!$user->isVerified()) {
             throw new CustomUserMessageAuthenticationException(
-                'Inactive account cannot log in!'
+                'Compte Inactive'
+            );
+        }
+        if($user->isBlocked())
+        {
+            throw new CustomUserMessageAuthenticationException(
+                'Compte Bloquer'
             );
         }
     }
