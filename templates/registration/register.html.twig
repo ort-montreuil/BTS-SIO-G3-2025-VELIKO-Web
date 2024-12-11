@@ -5,19 +5,19 @@
 {% block body %}
     <style>
         .content {
-            display: flex;
-            justify-content: center; /* Centrer horizontalement */
-            align-items: center; /* Centrer verticalement */
-            flex-wrap: wrap;
-            height: 85vh;
+            display: flex; /* Utilisation de Flexbox pour aligner les éléments horizontalement */
+            justify-content: center; /* Centrer les éléments horizontalement */
+            align-items: center; /* Centrer les éléments verticalement */
+            flex-wrap: wrap; /* Permet aux éléments de se réorganiser sur plusieurs lignes si nécessaire */
+            height: 95vh; /* Utiliser toute la hauteur de la page */
             padding: 20px;
             box-sizing: border-box;
-            background: url('{{ asset('image/velo-cyclisme-cyclistes.webp') }}') center center no-repeat;
-            background-size: cover;
+            background: url('{{ asset('image/velo-cyclisme-cyclistes.webp') }}') center center no-repeat; /* L'image en fond */
+            background-size: cover; /* L'image prend toute la taille du conteneur */
         }
 
         .container {
-            margin: 30px auto;
+            margin: 40px auto;
             background-color: #fff;
             padding: 20px;
             border-radius: 8px;

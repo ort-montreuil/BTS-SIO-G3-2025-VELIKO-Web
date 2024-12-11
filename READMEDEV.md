@@ -6,7 +6,7 @@
 ### Étape 1 : Cloner le projet
 Cloner le dépôt Git du projet :
 ```bash
-git clone git@github.com:ort-montreuil/BTS-SIO-G1-2025-VELIKO-Web.git
+git clone  git@github.com:ort-montreuil/BTS-SIO-G3-2025-VELIKO-Web.git
 ```
 
 ### Étape 2 : Installation des dépendances
