@@ -33,7 +33,8 @@ php bin/console doctrine:migrations:migrate
 ### Étape 6 : Remplir la base de données avec les stations
 Exécuter la commande pour insérer les stations dans la base de données :
 ```bash
-php bin/console annnnnnnnn pp:fetch-stations
+php bin/console pp:fetch-stations
+
 ```
 
 ### Étape 7 : Lancer le serveur de développement
