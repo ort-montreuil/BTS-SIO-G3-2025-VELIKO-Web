@@ -58,10 +58,12 @@
                     <a href="{{ path('user.edit', { 'id': app.user.id }) }}" class="connect-button btn btn-primary">Modifier</a>
                     <a href="{{ path('user.password', {'id': app.user.id}) }}" class="connect-button btn btn-primary">Modifier
                         Mot de passe</a>
+                    <a href="{{ path('app_mes_stations') }}" class="connect-button btn btn-primary">Mes favoris</a>
                     <br><br>
                     <form action="{{ path('user.deleteConfirmation', { 'id': app.user.id }) }}">
                         <button type="submit" class="btn btn-danger">Supprimer mon compte</button>
                     </form>
+
                 </div>
                 <br>
             </div>
