@@ -15,9 +15,18 @@ use Symfony\Component\Routing\Attribute\Route;
 
 class UserController extends AbstractController
 {
+
     #[Route('/user', name: 'app_user')]
     public function index(): Response
     {
+        $user = $this->getUser();
+        if ($user)
+        {
+            if ($user->isBooleanChangerMdp())
+            {
+                return $this->redirectToRoute("app_change_mdp_force");
+            }
+        }
         // Vérifier si l'utilisateur est connecté
         if (!$this->getUser()) {
             return $this->redirectToRoute('app_login'); // Redirigez vers la page de connexion
@@ -59,7 +68,7 @@ class UserController extends AbstractController
         ]);
     }
 
-    #[Route('/user/editPassword/{id}', name: 'user.password')]  //pour éditer les informations de mot de passe d'un utilisateur spécifique
+    #[Route('/user/editPassword/{id}', name: "app_userP")]  //pour éditer les informations de mot de passe d'un utilisateur spécifique
     public function editPassword(User $user, Request $request, UserPasswordHasherInterface $hasher, EntityManagerInterface $manager): Response
     {
         // Créer le formulaire pour le changement de mot de passe

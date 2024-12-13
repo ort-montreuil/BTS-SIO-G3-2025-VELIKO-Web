@@ -17,6 +17,7 @@ use Symfony\Component\Routing\Annotation\Route;
 
 class StationFavController extends AbstractController
 {
+
     private EntityManagerInterface $entityManager;
     private UserRepository $userRepository;
     private StationRepository $stationRepository;
@@ -37,6 +38,14 @@ class StationFavController extends AbstractController
     #[Route('/mes/stations', name: 'app_mes_stations')]
     public function index(): Response
     {
+        $user = $this->getUser();
+        if ($user)
+        {
+            if ($user->isBooleanChangerMdp())
+            {
+                return $this->redirectToRoute("app_change_mdp_force");
+            }
+        }
         $stations1 = $this->stationRepository->findAll();
 
         // Récupérer l'utilisateur connecté

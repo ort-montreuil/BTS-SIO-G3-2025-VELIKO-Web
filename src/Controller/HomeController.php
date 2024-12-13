@@ -3,6 +3,7 @@
 namespace App\Controller;
 
 use App\Entity\StationUser;
+use App\Entity\User;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\Routing\Attribute\Route;
 use Symfony\Component\HttpFoundation\Response;
@@ -15,10 +16,19 @@ class HomeController extends AbstractController
     public function __construct(EntityManagerInterface $entityManager)
     {
         $this->entityManager = $entityManager;
+
     }
     #[Route('/carte', name: 'app_home')]
     public function home(): Response
     {
+        $user = $this->getUser();
+        if ($user)
+        {
+            if ($user->isBooleanChangerMdp())
+            {
+                return $this->redirectToRoute("app_change_mdp_force");
+            }
+        }
         $curl = curl_init();
 
         curl_setopt_array($curl, [

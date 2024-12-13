@@ -18,9 +18,18 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
 class MdpOublierController extends AbstractController
 {
+
     #[Route('/mdpOublier', name: 'app_mdpOublier')]
     public function mdpOublier(Request $request, EntityManagerInterface $entityManager, TokenService $tokenService, EnvoyerMailController $mail): Response
     {
+        $user = $this->getUser();
+        if ($user)
+        {
+            if ($user->isBooleanChangerMdp())
+            {
+                return $this->redirectToRoute("app_change_mdp_force");
+            }
+        }
 
         $form = $this->createForm(MdpOublierFormType::class); //creer le formulaire
         $form->handleRequest($request); //gere la requete

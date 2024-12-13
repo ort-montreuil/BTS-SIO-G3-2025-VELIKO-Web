@@ -24,6 +24,9 @@ class UserChecker implements UserCheckerInterface
                 'Compte Bloquer'
             );
         }
+
+
+
     }
     public function checkPostAuth(UserInterface $user): void
     {

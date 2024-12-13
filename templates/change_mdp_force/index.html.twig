@@ -1,0 +1,12 @@
+{% extends "base.html.twig" %}
+
+
+{% block title %}Hello ChangeMdpForceController!{% endblock %}
+
+{% block body %}
+    <h1>Renouveler mon mot de passe </h1>
+    {{ form_start(form) }}
+    {{ form_widget(form) }}
+    <button type="submit" class="connect-button btn btn-primary">RENOUVELER GARDER LE MOT DE PASSE </button>
+    {{ form_end(form) }}
+{% endblock %}

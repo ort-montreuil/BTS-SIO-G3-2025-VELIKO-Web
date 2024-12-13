@@ -33,13 +33,27 @@ class AppFixtures extends Fixture
         $user->setCodePostal('75000');
         $user->setNom('Toto');
         $user->setPrenom('Mr');
+        $user->setBooleanChangerMdp(0);
         $manager->persist($user);
+
+
+        for ($i = 0; $i < 10; $i++) {
+            $user = new User();
+            $user->setEmail("user-$i@gmail.com");
+            $user->setRoles([]);
+            $user->setPassword($this->hasher->hashPassword($user, 'Motdepasse123/'));
+            $user->setVerified(true);
+            $user->setDateNaissance(new \DateTime('1990-01-01'));
+            $user->setAdresse('1 rue de la rue');
+            $user->setVille('Paris');
+            $user->setCodePostal('75000');
+            $user->setNom('Toto');
+            $user->setPrenom('Mr');
+            $user->setBooleanChangerMdp(0);
+            $manager->persist($user);
+        }
+
 
         $manager->flush();
     }
-
-
-
-
-
 }

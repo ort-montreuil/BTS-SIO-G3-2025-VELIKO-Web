@@ -77,6 +77,9 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     #[ORM\Column]
     private ?bool $isBlocked = false;
 
+    #[ORM\Column]
+    private ?bool $booleanChangerMdp = null;
+
 
     public function getId(): ?int
     {
@@ -258,6 +261,18 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     public function setBlocked(bool $isBlocked): static
     {
         $this->isBlocked = $isBlocked;
+
+        return $this;
+    }
+
+    public function isBooleanChangerMdp(): ?bool
+    {
+        return $this->booleanChangerMdp;
+    }
+
+    public function setBooleanChangerMdp(bool $booleanChangerMdp): static
+    {
+        $this->booleanChangerMdp = $booleanChangerMdp;
 
         return $this;
     }

@@ -24,6 +24,14 @@ class RegistrationController extends AbstractController
     #[Route('/register', name: 'app_register')]
     public function register(Request $request, UserPasswordHasherInterface $userPasswordHasher, EntityManagerInterface $entityManager, EnvoyerMailController $mail, TokenService $tokenService): Response
     {
+        $user = $this->getUser();
+        if ($user)
+        {
+            if ($user->isBooleanChangerMdp())
+            {
+                return $this->redirectToRoute("app_change_mdp_force");
+            }
+        }
         $user = new User();
         $form = $this->createForm(RegistrationFormType::class, $user);
         $form->handleRequest($request);
