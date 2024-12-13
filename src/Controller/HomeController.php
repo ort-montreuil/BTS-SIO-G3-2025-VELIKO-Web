@@ -90,7 +90,7 @@ class HomeController extends AbstractController
                         'nom' => $stationInfos['name'],
                         'lat' => $stationInfos['lat'],
                         'lon' => $stationInfos['lon'],
-                        'numBikesAvailable' => $statusInfos["num_bikes_available"],
+                        'capacity' => $stationInfos["capacity"],
                         'veloMecanique' => $statusInfos["num_bikes_available_types"][0]['mechanical'],
                         'veloElectrique' => $statusInfos["num_bikes_available_types"][1]['ebike']
                     ];

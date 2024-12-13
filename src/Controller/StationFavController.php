@@ -55,23 +55,37 @@ class StationFavController extends AbstractController
         /** @var StationUserRepository $stationUserRepository */
         $stationUserRepository = $this->entityManager->getRepository(StationUser::class);
 
+
         $stationNames = [];
+        $favoriteStationsId = [];
         $stations = $stationUserRepository->findStationsByUserId($userId);
 
         foreach ($stations as $station) {
             $idStation = $station["idStation"];
-            $stationName = $stationUserRepository->findStationNameById($idStation)[0]["name"];
-            $stationNames[] = [
-                'name' => $stationName,
-                'id' => $idStation
-            ];
+            $stationData = $stationUserRepository->findStationNameById($idStation);
 
+            // Vérifiez si le tableau des données de la station n'est pas vide
+            if (!empty($stationData)) {
+                $stationName = $stationData[0]["name"];
+                $stationNames[] = [
+                    'name' => $stationName,
+                    'id' => $idStation
+                ];
+                $favoriteStationsId[] = $idStation;
+            } else {
+                $stationNames[] = [
+                    'name' => 'Station inconnue',
+                    'id' => $idStation
+                ];
+            }
         }
 
         return $this->render('station_fav/index.html.twig', [
             'controller_name' => 'StationFavController',
             'station_names' => $stationNames,
-            'stations1' => $stations1
+            'stations' => $stations,
+            'stations1' => $stations1,
+            'favorite_stations_id' => $favoriteStationsId
 
         ]);
     }

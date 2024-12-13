@@ -45,6 +45,10 @@ class RegistrationFormType extends AbstractType
 
             ])
             ->add('date_naissance', DateType::class, [
+                'widget' => 'choice',
+                'format' => 'yyyy-MM-dd',
+                'years' => range(date('Y'),1900),
+                'label'=> 'Date de naissance',
             ])
             ->add('adresse', TextType::class, [
             ])
