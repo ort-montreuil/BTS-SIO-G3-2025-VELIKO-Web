@@ -78,7 +78,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     private ?bool $isBlocked = false;
 
     #[ORM\Column]
-    private ?bool $booleanChangerMdp = null;
+    private ?bool $booleanChangerMdp = false;
 
 
     public function getId(): ?int
