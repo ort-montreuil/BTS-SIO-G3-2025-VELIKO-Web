@@ -1,36 +1,128 @@
+{% extends 'base.html.twig' %}
+
 {% block body %}
-    <div class="favorites-container">
-        <!-- Back button in top-left corner -->
 
+    <style>
+        .content {
+            display: flex; /* Utilisation de Flexbox pour aligner les éléments horizontalement */
+            justify-content: center; /* Centrer les éléments horizontalement */
+            align-items: center; /* Centrer les éléments verticalement */
+            flex-wrap: wrap; /* Permet aux éléments de se réorganiser sur plusieurs lignes si nécessaire */
+            height: 95vh; /* Utiliser toute la hauteur de la page */
+            padding: 20px;
+            box-sizing: border-box;
+            background: url('{{ asset('image/velo-cyclisme-cyclistes.webp') }}') center center no-repeat; /* L'image en fond */
+            background-size: cover; /* L'image prend toute la taille du conteneur */
+        }
 
-        <h2 style="color: #007bff;">Mes Stations Favorites</h2>
-        <div class="station-list">
-            {% for station in station_names %}
-                <div class="station-item">
-                    <div class="station-info">
-                        <h3>{{ station.name }}</h3>
-                    </div>
-                    <form action="{{ path('app_station_delete', {'id': station.id}) }}" method="post">
-                        <button type="submit" class="favorite-btn">Retirer des favoris</button>
-                    </form>
+        .container {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: space-between;
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            width: 80%;
+            max-width: 1200px;
+        }
+
+        .favorites-container, .stations-container {
+            flex: 1;
+            margin: 0 10px;
+            min-width: 300px;
+        }
+
+        h2 {
+            color: #007bff;
+        }
+
+        .station-list {
+            margin-top: 10px;
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+            gap: 10px;
+        }
+
+        .station-item {
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            align-items: center;
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            background-color: #f9f9f9;
+        }
+
+        .station-info h3 {
+            font-size: 16px;
+            margin-bottom: 10px;
+        }
+
+        .favorite-btn {
+            background-color: #007bff;
+            color: #fff;
+            border: none;
+            padding: 5px 10px;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        .favorite-btn:hover {
+            background-color: #0056b3;
+        }
+    </style>
+
+    <div class="content">
+        <div class="container">
+            <!-- Liste des stations favorites -->
+            <div class="favorites-container">
+                <h2>Mes Stations Favorites :</h2>
+                <br>
+                <div class="station-list">
+                    {% if station_names is not empty %}
+                        {% for station in station_names %}
+                            <div class="station-item">
+                                <div class="station-info">
+                                    <h3>{{ station.name }}</h3>
+                                </div>
+                                <form action="{{ path('app_station_delete', {'id': station.id}) }}" method="post">
+                                    <button type="submit" class="favorite-btn">Retirer des favoris</button>
+                                </form>
+                            </div>
+                        {% endfor %}
+                    {% else %}
+                        <p>Aucune station favorite.</p>
+                    {% endif %}
                 </div>
-            {% endfor %}
+            </div>
+
+            <!-- Liste des stations disponibles -->
+            <div class="stations-container">
+                <h2>La Liste des Stations :</h2>
+                <br>
+                <div class="station-list">
+                    {% if stations1 is not empty %}
+                        {% for stations in stations1 %}
+                            <div class="station-item">
+                                <div class="station-info">
+                                    <h3>{{ stations.name }}</h3>
+                                </div>
+
+                                        <button type="submit" class="favorite-btn">Mettre en favoris</button>
+
+                                <form action="{{ path('app_add_favorite', {'id': stations.getStationId()}) }}" method="post">
+
+                                </form>
+                            </div>
+                        {% endfor %}
+                    {% else %}
+                        <p>Aucune station disponible.</p>
+                    {% endif %}
+                </div>
+            </div>
         </div>
     </div>
-    <div>
-        <h2>Les stations</h2>
-        <div class="station-list">
-            {% for stations in stations1 %}
-                <div class="station-item">
-                    <div class="station-info">
-                        <h3>{{ stations.name }}</h3>
-                    </div>
-                    <form action="{{ path('app_add_favorite', {'id': stations.getStationId()}) }}" method="post">
-                        <button type="submit" class="favorite-btn">Mettre en favoris</button>
-                    </form>
-                </div>
-            {% endfor %}
 
-        </div>
-    </div>
 {% endblock %}

@@ -3,12 +3,58 @@
 {% block title %}Confirmer la suppression{% endblock %}
 
 {% block body %}
-    <h1>Confirmer la suppression de votre compte</h1>
-    <p>Êtes-vous sûr de vouloir supprimer votre compte, {{ user.nom }} ?</p>
 
-    <form action="{{ path('user.delete',{ 'id': app.user.id }) }}" method="POST">
-        <input type="hidden" name="_token" value="{{ csrf_token('delete' ~ app.user.id) }}">
-        <button type="submit" class="btn btn-danger">Confirmer la suppression</button>
-    </form>
-    <a href="{{ path('app_user',{ 'id': app.user.id }) }}" class="connect-button btn btn-primary">Annuler</a>
+    <style>
+        .container {
+            margin: 30px auto;
+            background-color: white;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            width: 80%;
+            max-width: 900px;
+        }
+
+        .content {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex-wrap: wrap;
+            height: 78vh;
+            box-sizing: border-box;
+            background: url('{{ asset('image/velo-cyclisme-cyclistes.webp') }}') center center no-repeat;
+            background-size: cover;
+        }
+        .titre {
+            color: #007bff;
+            text-align: center;
+            font-weight: bold;
+            font-size: 36px;
+            font-family: 'Poppins';
+        }
+        .button-group {
+            display: flex;
+            justify-content: center;  /* Centrer les boutons */
+            gap: 10px;  /* Espacer les boutons */
+            flex-wrap: wrap;
+            margin-top: 20px;
+        }
+    </style>
+
+    <div class="content">
+        <div class="container">
+            <h1 class="titre">Confirmer la suppression de votre compte : </h1>
+            <br>
+            <p>Êtes-vous sûr de vouloir supprimer votre compte, {{ user.nom }} ?</p>
+
+            <div class="button-group">
+            <form action="{{ path('user.delete',{ 'id': app.user.id }) }}" method="POST">
+                <input type="hidden" name="_token" value="{{ csrf_token('delete' ~ app.user.id) }}">
+                <button type="submit" class="btn btn-danger">Confirmer la suppression</button>
+            </form>
+            <a href="{{ path('app_user',{ 'id': app.user.id }) }}" class="connect-button btn btn-primary">Annuler</a>
+        </div>
+        </div>
+    </div>
+
 {% endblock %}

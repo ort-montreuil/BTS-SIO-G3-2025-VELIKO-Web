@@ -64,7 +64,7 @@ class UserController extends AbstractController
 
         // Rendre le formulaire dans la vue
         return $this->render('user/edit.html.twig', [
-            'form' => $form->createView(), // Passe le formulaire à la vue
+            'UserType' => $form
         ]);
     }
 
@@ -123,7 +123,6 @@ class UserController extends AbstractController
     }
 
 
-    //supprimer compte
 
     //supprimer compte
     #[Route('/user/deleteAccount/{id}', name: 'user.delete' ,methods: 'POST')]

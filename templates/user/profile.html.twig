@@ -15,57 +15,133 @@
         }
 
         .content {
-            display: flex; /* Utilisation de Flexbox pour aligner les éléments horizontalement */
-            justify-content: center; /* Centrer les éléments horizontalement */
-            align-items: center; /* Centrer les éléments verticalement */
-            flex-wrap: wrap; /* Permet aux éléments de se réorganiser sur plusieurs lignes si nécessaire */
-            height: 90vh; /* Utiliser toute la hauteur de la page */
-            padding: 20px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex-wrap: wrap;
+            height: 88vh;
             box-sizing: border-box;
-            background: url('{{ asset('image/velo-cyclisme-cyclistes.webp') }}') center center no-repeat; /* L'image en fond */
-            background-size: cover; /* L'image prend toute la taille du conteneur */
+            background: url('{{ asset('image/velo-cyclisme-cyclistes.webp') }}') center center no-repeat;
+            background-size: cover;
         }
-        .text{
-            font-size: 20px;
 
+        .text {
+            font-size: 20px;
         }
+
+        .titre {
+            color: #007bff;
+            text-align: center;
+            font-weight: bold;
+            font-size: 36px;
+            font-family: 'Poppins';
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        .form-row {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 20px;
+            background-color: rgba(255, 255, 255, 0.8); /* Légère transparence pour le fond */
+            padding: 10px;
+            border-radius: 8px;
+        }
+
+        .form-row .col-xs1 {
+            width: 30%;
+            font-weight: bold;
+            color: #333;
+        }
+
+        .form-row .col-xs3 {
+            width: 60%;
+            color: #555;
+        }
+
+        .button-group {
+            display: flex;
+            justify-content: center;  /* Centrer les boutons */
+            gap: 10px;  /* Espacer les boutons */
+            flex-wrap: wrap;
+            margin-top: 20px;
+        }
+
+        .connect-button {
+            text-decoration: none;
+            color: white;
+            padding: 10px 20px;
+            border-radius: 5px;
+            text-align: center;
+            display: inline-block;
+        }
+
+        /* Ajout de styles supplémentaires pour l'alignement et l'esthétique */
+        .alert-success {
+            background-color: #d4edda;
+            color: #155724;
+            border: 1px solid #c3e6cb;
+            padding: 15px;
+            border-radius: 5px;
+        }
+
+        form button {
+            width: 100%;
+            padding: 12px 20px;
+            background-color: #dc3545;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            font-size: 16px;
+            cursor: pointer;
+        }
+
+
     </style>
+
     <div class="content">
         <div class="container">
-            <div class="col-xs4"><h3>Profil de {{ app.user.prenom }} {{ app.user.nom }} :</h3></div>
-            {# Affichage des messages flash #}
+            <h3 class="titre">Profil de {{ app.user.prenom }} {{ app.user.nom }} :</h3>
+            <br>
             {% for message in app.session.flashBag.get('success') %}
                 <div class="alert alert-success">
                     {{ message }}
                 </div>
             {% endfor %}
-            <div class="grix xs2">
 
-                <div class="col-xs1 text">Email :</div>
-                <div class="col-xs3">{{ app.user.email }}</div>
-                <div class="col-xs1 text">Nom :</div>
-                <div class="col-xs3">{{ app.user.nom }}</div>
-                <div class="col-xs1 text">Prénom :</div>
-                <div class="col-xs3">{{ app.user.prenom }}</div>
-                <div class="col-xs1 text">Adresse:</div>
-                <div class="col-xs3">{{ app.user.adresse }}</div>
-                <div class="col-xs1 text">Ville :</div>
-                <div class="col-xs3">{{ app.user.ville }}</div>
-                <div class="col-xs1 text">Code Postal :</div>
-                <div class="col-xs3">{{ app.user.codePostal }}</div>
-                <br>
-                <div class="col-xs4">
-                    <a href="{{ path('user.edit', { 'id': app.user.id }) }}" class="connect-button btn btn-primary">Modifier</a>
-                    <a href="{{ path('user.password', {'id': app.user.id}) }}" class="connect-button btn btn-primary">Modifier
-                        Mot de passe</a>
-                    <a href="{{ path('app_mes_stations') }}" class="connect-button btn btn-primary">Mes favoris</a>
-                    <br><br>
-                    <form action="{{ path('user.deleteConfirmation', { 'id': app.user.id }) }}">
-                        <button type="submit" class="btn btn-danger">Supprimer mon compte</button>
-                    </form>
+            <div class="form-group">
+                <div class="form-row">
+                    <div class="col-xs1 text">Email :</div>
+                    <div class="col-xs3 text">{{ app.user.email }}</div>
 
                 </div>
-                <br>
+                <div class="form-row">
+                    <div class="col-xs1 text">Nom :</div>
+                    <div class="col-xs3 text">{{ app.user.nom }}</div>
+                    <div class="col-xs1 text">Prénom :</div>
+                    <div class="col-xs3 text">{{ app.user.prenom }}</div>
+                    <div class="col-xs1 text">Date De Naissance :</div>
+                    <div class="col-xs3 text">{{ app.user.dateNaissance|date('d/m/Y') }}</div>
+                    <div class="col-xs1 text">Ville :</div>
+                    <div class="col-xs3 text">{{ app.user.ville }}</div>
+                </div>
+                <div class="form-row">
+                    <div class="col-xs1 text">Adresse :</div>
+                    <div class="col-xs3 text">{{ app.user.adresse }}</div>
+                    <div class="col-xs1 text">Code Postal :</div>
+                    <div class="col-xs3 text">{{ app.user.codePostal }}</div>
+                </div>
+            </div>
+
+            <div class="button-group">
+                <a href="{{ path('user.edit', { 'id': app.user.id }) }}" class="connect-button btn btn-primary">Modifier Mon Profil</a>
+                <a href="{{ path('app_userP', {'id': app.user.id}) }}" class="connect-button btn btn-primary">Modifier Mot de passe</a>
+                <a href="{{ path('app_mes_stations') }}" class="connect-button btn btn-primary">Mes favoris</a>
+                <form action="{{ path('user.deleteConfirmation', { 'id': app.user.id }) }}">
+                    <button type="submit" class="connect-button btn btn-danger">Supprimer mon compte</button>
+                </form>
             </div>
         </div>
     </div>
