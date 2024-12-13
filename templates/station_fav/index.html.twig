@@ -4,11 +4,10 @@
 
     <style>
         .content {
-            display: flex; /* Utilisation de Flexbox pour aligner les éléments horizontalement */
+            display: flex;  /* Utilisation de Flexbox pour aligner les éléments horizontalement */
             justify-content: center; /* Centrer les éléments horizontalement */
             align-items: center; /* Centrer les éléments verticalement */
             flex-wrap: wrap; /* Permet aux éléments de se réorganiser sur plusieurs lignes si nécessaire */
-            height: 95vh; /* Utiliser toute la hauteur de la page */
             padding: 20px;
             box-sizing: border-box;
             background: url('{{ asset('image/velo-cyclisme-cyclistes.webp') }}') center center no-repeat; /* L'image en fond */
@@ -17,20 +16,17 @@
 
         .container {
             display: flex;
-            flex-wrap: wrap;
-            justify-content: space-between;
+            flex-direction: column; /* Disposition en colonne pour que les sections s'affichent les unes en dessous des autres */
             background-color: #fff;
             padding: 20px;
             border-radius: 8px;
             box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-            width: 80%;
-            max-width: 1200px;
+            width: 100%;  /* Agrandir la largeur du conteneur */
+            max-width: 1600px; /* Maximum à 1600px */
         }
 
         .favorites-container, .stations-container {
-            flex: 1;
-            margin: 0 10px;
-            min-width: 300px;
+            margin-bottom: 20px; /* Ajout d'une marge pour espacer les sections */
         }
 
         h2 {
@@ -98,7 +94,7 @@
                 </div>
             </div>
 
-            <!-- Liste des stations disponibles -->
+            <!-- Liste des stations disponibles (en dessous de la section des favoris) -->
             <div class="stations-container">
                 <h2>La Liste des Stations :</h2>
                 <br>
@@ -110,10 +106,8 @@
                                     <h3>{{ stations.name }}</h3>
                                 </div>
 
-                                        <button type="submit" class="favorite-btn">Mettre en favoris</button>
-
                                 <form action="{{ path('app_add_favorite', {'id': stations.getStationId()}) }}" method="post">
-
+                                    <button type="submit" class="favorite-btn">Mettre en favoris</button>
                                 </form>
                             </div>
                         {% endfor %}
