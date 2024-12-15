@@ -21,9 +21,6 @@ class UserType extends AbstractType
     {
         $builder
             ->add('email', EmailType::class, [
-                'constraints' => [
-                    new Callback([$this, 'validateEmailDomain']),
-                ],
             ])
             ->add('nom', TextType::class, [
 
