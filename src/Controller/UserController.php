@@ -150,6 +150,7 @@ class UserController extends AbstractController
         $user->setEmail("anonymous" . $user->getId() . "@veliko.lan");
         $user->setNom("anonymous");
         $user->setPrenom("anonymous");
+        $user->setAdresse("anonymous");
         $user->setPassword(password_hash($randomMdp, PASSWORD_BCRYPT));
 
         $manager->flush();
