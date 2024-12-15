@@ -49,6 +49,7 @@ class AppFixtures extends Fixture
             $user->setCodePostal('75000');
             $user->setNom('Toto');
             $user->setPrenom('Mr');
+            $user->setToken(null);
             $user->setBooleanChangerMdp(0);
             $manager->persist($user);
         }
