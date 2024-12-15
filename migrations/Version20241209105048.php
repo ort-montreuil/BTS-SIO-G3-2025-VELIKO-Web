@@ -21,7 +21,7 @@ final class Version20241209105048 extends AbstractMigration
     {
         // this up() migration is auto-generated, please modify it to your needs
         //$this->addSql('ALTER TABLE station CHANGE station_id station_id BIGINT NOT NULL, ADD PRIMARY KEY (station_id)');
-        $this->addSql('ALTER TABLE user ADD boolean_changer_mdp TINYINT(1) NOT NULL, DROP last_password_change');
+        $this->addSql('ALTER TABLE user ADD boolean_changer_mdp TINYINT(1) NOT NULL');
     }
 
     public function down(Schema $schema): void
@@ -29,6 +29,6 @@ final class Version20241209105048 extends AbstractMigration
         // this down() migration is auto-generated, please modify it to your needs
        // $this->addSql('DROP INDEX `primary` ON station');
         //$this->addSql('ALTER TABLE station CHANGE station_id station_id INT NOT NULL');
-        $this->addSql('ALTER TABLE `user` ADD last_password_change DATE NOT NULL, DROP boolean_changer_mdp');
+        $this->addSql('ALTER TABLE `user` DROP boolean_changer_mdp');
     }
 }
