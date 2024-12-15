@@ -10,7 +10,6 @@ use Doctrine\ORM\Mapping as ORM;
 class Station
 {
     #[ORM\Id]
-
     #[ORM\Column(type: Types::BIGINT)]
     private ?string $station_id = null;
 
