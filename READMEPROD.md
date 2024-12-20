@@ -18,6 +18,6 @@ composer install --no-dev --optimize-autoloader
 
 ### Étape 4 : Nettoyer le cache
 ```bash
-APP_ENV=prod APP_DEBUG=0 php bin/console cache:clears
+APP_ENV=prod APP_DEBUG=0 php bin/console cache:clear
 ```
 
