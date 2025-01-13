@@ -6,6 +6,7 @@ use App\Entity\User;
 use App\Form\MdpOublierFormType;
 use App\Form\ResetMdpFormType;
 use App\Service\TokenService;
+use App\Controller\EnvoyerMailController;
 use Doctrine\ORM\EntityManagerInterface;
 use phpDocumentor\Reflection\Types\This;
 use Symfony\Component\HttpFoundation\Response;
@@ -64,7 +65,7 @@ class MdpOublierController extends AbstractController
         }
 
         return $this->render('mdpOublier/mdpOublier.html.twig', [
-            'form' => $form->CreateView(),
+            'form' => $form->createView(),
         ]);
     }
 
@@ -93,7 +94,7 @@ class MdpOublierController extends AbstractController
         }
 
         return $this->render('mdpOublier/resetMdp.html.twig', [
-            'form' => $form->CreateView(),
+            'form' => $form->createView(),
         ]);
     }
 }

@@ -1,10 +1,67 @@
 {% extends 'base.html.twig' %}
 
-{% block content %}
+{% block body  %}
+    <style>
+        .titre{
+            color: #007bff;            /* Couleur bleue */
+            text-align: center;        /* Centrer le texte */
+            font-weight: bold;         /* Mettre le texte en gras */
+            font-size: 36px;
+            font-family:'Poppins'
 
-    <h1>Réinitialiser mon mot de passe </h1>
-    {{ form_start(form) }}
-    {{ form_widget(form) }}
-    <button type="submit" class="connect-button btn btn-primary">SAUVEGARDER LE MOT DE PASSE </button>
-    {{ form_end(form) }}
+        }
+        .container {
+            margin: 30px auto;
+            background-color: white;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            width: 80%;
+            max-width: 900px;
+        }
+        label {
+            display: block;
+            margin-bottom: 5px;
+        }
+        input[type="email"] {
+            width: 100%; /* Augmente la largeur de l'input text */
+            padding: 5px;
+            border-radius: 5px;
+            border: 1px solid #ccc;
+        }
+        input[type="submit"] {
+            background-color: #007bff;
+            color: #fff;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+        .connect-button {
+            margin-left: 0; /* Ajustez cette valeur pour déplacer le bouton vers la gauche */
+        }
+
+        .content {
+            display: flex;  /* Utilisation de Flexbox pour aligner les éléments horizontalement */
+            justify-content: center; /* Centrer les éléments horizontalement */
+            align-items: center; /* Centrer les éléments verticalement */
+            flex-wrap: wrap; /* Permet aux éléments de se réorganiser sur plusieurs lignes si nécessaire */
+            height: 83vh; /* Utiliser toute la hauteur de la page */
+            padding: 20px;
+            box-sizing: border-box;
+            background: url('{{ asset('image/velo-cyclisme-cyclistes.webp') }}') center center no-repeat; /* L'image en fond */
+            background-size: cover; /* L'image prend toute la taille du conteneur */
+        }
+    </style>
+    <div class="content">
+        <div class="container">
+            <h1>Réinitialiser mon mot de passe </h1>
+            {{ form_start(form) }}
+            {{ form_widget(form) }}
+            <br>
+            <button type="submit" class="connect-button btn btn-primary">SAUVEGARDER LE MOT DE PASSE </button>
+            {{ form_end(form) }}
+        </div>
+    </div>
+
 {% endblock %}

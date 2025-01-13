@@ -59,7 +59,7 @@
             justify-content: center; /* Centrer les éléments horizontalement */
             align-items: center; /* Centrer les éléments verticalement */
             flex-wrap: wrap; /* Permet aux éléments de se réorganiser sur plusieurs lignes si nécessaire */
-            height: 78vh; /* Utiliser toute la hauteur de la page */
+            height: 100vh; /* Utiliser toute la hauteur de la page */
             padding: 20px;
             box-sizing: border-box;
             background: url('{{ asset('image/velo-cyclisme-cyclistes.webp') }}') center center no-repeat; /* L'image en fond */
@@ -97,9 +97,10 @@
             <label for="password">Mot de passe</label>
             <input type="password" name="_password" id="password" class="form-control" autocomplete="current-password"
                    required>
+            <a href="/mdpOublier">Mot de Passe oublié ?</a>
 
             <input type="hidden" name="_csrf_token" value="{{ csrf_token('authenticate') }}">
-            <br>
+            <br><br>
             <button class="btn btn-lg btn-primary" type="submit">
                 Se connecter
             </button>

@@ -17,15 +17,18 @@ class MdpOublierFormType extends AbstractType
         $builder
             ->add('email', EmailType::class,
                 [
-                    'label' => "ADRESSE E-MAIL : "
+                    'label' => "ADRESSE E-MAIL : ",
+                    'attr' => [
+                        'placeholder' => "Entrez votre adresse mail",
+                    ],
                 ]);
-            }
+    }
 
-        public function configureOptions(OptionsResolver $resolver): void
+    public function configureOptions(OptionsResolver $resolver): void
 
-        {$resolver->setDefaults([
+    {$resolver->setDefaults([
 
-        ]);
+    ]);
     }
 
 }

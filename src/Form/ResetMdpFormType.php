@@ -19,7 +19,11 @@ class ResetMdpFormType extends AbstractType
         $builder
             ->add('email', EmailType::class,
                 [
-                    'label' => "ADRESSE E-MAIL : "
+                    'label' => "ADRESSE E-MAIL : ",
+                    'attr' => [
+                        'placeholder' => "Entrez votre adresse mail",
+                    ],
+
                 ])
             ->add('newPassword', RepeatedType::class, [
                 'label'=>"NOUVEAU MOT DE PASSE : ",
