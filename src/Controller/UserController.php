@@ -153,6 +153,10 @@ class UserController extends AbstractController
         $user->setAdresse("anonymous");
         $user->setPassword(password_hash($randomMdp, PASSWORD_BCRYPT));
 
+        foreach ($user->getReservations() as $reservation) {
+            $manager->remove($reservation);
+        }
+
         $manager->flush();
 
         // Ajouter un message flash pour informer de la suppression réussie

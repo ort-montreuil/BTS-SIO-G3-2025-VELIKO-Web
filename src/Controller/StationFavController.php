@@ -46,6 +46,7 @@ class StationFavController extends AbstractController
                 return $this->redirectToRoute("app_change_mdp_force");
             }
         }
+
         $stations1 = $this->stationRepository->findAll();
 
         // Récupérer l'utilisateur connecté

@@ -39,7 +39,9 @@ security:
         # - { path: ^/admin, roles: ROLE_ADMIN }
         -  {path: ^/security/user, roles: ROLE_USER}
         # Autoriser l'accès à la page d'inscription pour les utilisateurs authentifiés
-        - { path: ^/register/user, roles: ROLE_USER }
+        - { path: ^/user, roles: ROLE_USER }
+        - {path: ^/security/admin, roles: ROLE_ADMIN}
+
 
 when@test:
     security:
