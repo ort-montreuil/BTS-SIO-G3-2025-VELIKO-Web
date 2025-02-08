@@ -1,0 +1,114 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Réservations{% endblock %}
+
+{% block body %}
+    <style>
+        .titre {
+            color: #007bff; /* Couleur bleue */
+            text-align: center; /* Centrer le texte */
+            font-weight: bold; /* Mettre le texte en gras */
+            font-size: 36px;
+            font-family: 'Poppins'
+
+        }
+
+        .container {
+            margin: 30px auto;
+            background-color: white;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            width: 80%;
+            max-width: 900px;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 5px;
+        }
+
+        input[type="text"], input[type="password"] {
+            width: calc(100% - 10px);
+            padding: 10px;
+            border-radius: 5px;
+            border: 1px solid #ccc;
+        }
+
+        input[type="submit"] {
+            background-color: #007bff;
+            color: #fff;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        .signup {
+            margin-top: 20px;
+            text-align: center;
+        }
+
+        .signup a {
+            color: #007bff;
+            text-decoration: none;
+        }
+
+        .content {
+            display: flex; /* Utilisation de Flexbox pour aligner les éléments horizontalement */
+            justify-content: center; /* Centrer les éléments horizontalement */
+            align-items: center; /* Centrer les éléments verticalement */
+            flex-wrap: wrap; /* Permet aux éléments de se réorganiser sur plusieurs lignes si nécessaire */
+            height: 100vh; /* Utiliser toute la hauteur de la page */
+            padding: 20px;
+            box-sizing: border-box;
+            background: url('{{ asset('image/velo-cyclisme-cyclistes.webp') }}') center center no-repeat; /* L'image en fond */
+            background-size: cover; /* L'image prend toute la taille du conteneur */
+        }
+
+        .text {
+            text-align: center;
+            color: #007bff;
+        }
+
+    </style>
+
+    <div class="content">
+        <div class="container">
+            <h1 class="titre"> Réservation</h1>
+            <br>
+            <h5 class="text">Réservez dès maintenant pour garantir la disponibilité de votre vélo !</h5>
+            <br>
+
+            <form method="post">
+                <div>
+                    <label for="dateReservation">Sélectionnez une date :</label>
+                    <input type="date" id="dateReservation" name="dateReservation ">
+                </div>
+                   <div>
+                        <label for="stationDepart">Station de départ :</label>
+                        <select id="stationDepart" name="stationDepart">
+                            {% for station in stations %}
+                                <option value="{{ station.stationId}}">{{ station.name }}</option>
+                            {% endfor %}
+                        </select>
+                   </div>
+                <div>
+                    <label for="stationFin">Station de Fin :</label>
+                    <select id="stationFin" name="stationFin">
+                        {% for station in stations %}
+                            <option value="{{ station.stationId}}">{{ station.name }}</option>
+                        {% endfor %}
+                    </select>
+                </div>
+<br>
+                <div class="text-center">
+                    <button type="submit" class="btn btn-lg btn-primary">Réserver</button>
+                </div>
+                </form>
+        </div>
+    </div>
+
+
+
+{% endblock %}
