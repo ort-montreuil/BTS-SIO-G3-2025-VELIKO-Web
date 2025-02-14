@@ -62,7 +62,7 @@ class ReservationController extends AbstractController
             // Créer la réservation
             $reservation = new Reservation();
             $reservation->setDateReservation($dateReservation);
-            $reservation->setStationDepart($stationDepart->getName()); // On stocke le nom de la station, ou l'objet station selon ton modèle
+            $reservation->setStationDepart($stationDepart->getName()); // On stocke le nom de la station
             $reservation->setStationFin($stationFin->getName()); // Même ici
             $reservation->setIdUser($user);
 
