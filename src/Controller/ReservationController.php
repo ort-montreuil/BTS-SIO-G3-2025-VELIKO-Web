@@ -2,12 +2,11 @@
 
 namespace App\Controller;
 
-use AllowDynamicProperties;
-use App\Entity\Station;
 use App\Entity\Reservation;
 use App\Entity\User;
 use App\Repository\StationRepository;
 use App\Repository\ReservationRepository;
+use App\Service\TokenService;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
@@ -15,29 +14,62 @@ use Symfony\Component\Routing\Attribute\Route;
 use Symfony\Component\HttpFoundation\Request;
 
 class ReservationController extends AbstractController
+
 {
     private StationRepository $stationRepository;
     private ReservationRepository $reservationRepository;
 
 
     public function __construct(
-        StationRepository $stationRepository,
+        StationRepository     $stationRepository,
         ReservationRepository $reservationRepository
 
-    ) {
+    )
+    {
         $this->stationRepository = $stationRepository;
         $this->reservationRepository = $reservationRepository;
 
     }
 
     #[Route('/reservation', name: 'app_reservation')]
-    public function reservation(Request $request,EntityManagerInterface $entityManager): Response
+    public function reservation(Request $request, EntityManagerInterface $entityManager): Response
     {
         $user = $this->getUser();
         // Vérifier si l'utilisateur est connecté
         if (!$this->getUser()) {
             return $this->redirectToRoute('app_login');
         }
+
+        $stationId = $request->get('stationId');
+
+        $curl = curl_init();
+
+        curl_setopt_array($curl, [
+            CURLOPT_PORT => "9042",
+            CURLOPT_URL => "http://localhost:9042/api/velo/$stationId/location?",
+            CURLOPT_RETURNTRANSFER => true,
+            CURLOPT_MAXREDIRS => 10,
+            CURLOPT_TIMEOUT => 30,
+            CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
+            CURLOPT_CUSTOMREQUEST => "PUT",
+            CURLOPT_POSTFIELDS => "",
+            CURLOPT_HTTPHEADER => [
+                "Authorization: RG6F8do7ERFGsEgwkPEdW1Feyus0LXJ21E2EZRETTR65hN9DL8a3O8a",
+            ],
+        ]);
+
+        $response = curl_exec($curl);
+        $err = curl_error($curl);
+
+        curl_close($curl);
+
+        if ($err) {
+            echo "cURL Error #:" . $err;
+        } else {
+            json_decode($response, true);
+        }
+
+
         $stationNames = [];
         $stations = $this->stationRepository->findAll();
 
@@ -49,6 +81,7 @@ class ReservationController extends AbstractController
         }
 
         if ($request->isMethod('POST')) {
+
             // Récupérer les IDs des stations depuis le formulaire
             $dateReservation = new \DateTime();
             $stationDepartId = $request->get('stationDepart');
@@ -69,11 +102,7 @@ class ReservationController extends AbstractController
             // Sauvegarder la réservation dans la base de données
             $entityManager->persist($reservation);
             $entityManager->flush();
-
-
         }
-
-
 
 
         return $this->render('reservation/index.html.twig', [
@@ -83,3 +112,11 @@ class ReservationController extends AbstractController
         ]);
     }
 }
+
+
+
+
+
+
+
+
