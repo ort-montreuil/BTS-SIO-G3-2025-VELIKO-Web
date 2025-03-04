@@ -94,8 +94,6 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     }
 
 
-
-
     public function getId(): ?int
     {
         return $this->id;
@@ -321,6 +319,9 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
 
         return $this;
     }
+
+
+
 
 
 }

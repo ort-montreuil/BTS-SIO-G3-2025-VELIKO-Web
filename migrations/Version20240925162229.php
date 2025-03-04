@@ -20,7 +20,7 @@ final class Version20240925162229 extends AbstractMigration
     public function up(Schema $schema): void
     {
         // this up() migration is auto-generated, please modify it to your needs
-        $this->addSql('CREATE TABLE `user` (
+        $this->addSql('CREATE TABLE  `user` (
         `id` INT AUTO_INCREMENT NOT NULL,
         `email` VARCHAR(180) NOT NULL,
         `roles` LONGTEXT CHARACTER SET utf8mb4 COLLATE utf8mb4_bin NOT NULL COMMENT \'(DC2Type:json)\' CHECK (JSON_VALID(`roles`)),

@@ -40,13 +40,12 @@ class ReservationController extends AbstractController
             return $this->redirectToRoute('app_login');
         }
 
-        $stationId = $request->get('stationId');
 
         $curl = curl_init();
 
         curl_setopt_array($curl, [
             CURLOPT_PORT => "9042",
-            CURLOPT_URL => "http://localhost:9042/api/velo/$stationId/location?",
+            CURLOPT_URL => "http://localhost:9042/api/velo/location?",
             CURLOPT_RETURNTRANSFER => true,
             CURLOPT_MAXREDIRS => 10,
             CURLOPT_TIMEOUT => 30,
@@ -83,35 +82,40 @@ class ReservationController extends AbstractController
         if ($request->isMethod('POST')) {
 
             // Récupérer les IDs des stations depuis le formulaire
-            $dateReservation = new \DateTime();
+            $dateReservation = $request->get('date_reservation');
             $stationDepartId = $request->get('stationDepart');
             $stationFinId = $request->get('stationFin');
 
+            $dateReservation = \DateTime::createFromFormat('Y-m-d', $dateReservation);
 
             // Récupérer les stations de la base de données
             $stationDepart = $this->stationRepository->find($stationDepartId);
             $stationFin = $this->stationRepository->find($stationFinId);
 
             // Créer la réservation
-            $reservation = new Reservation();
-            $reservation->setDateReservation($dateReservation);
-            $reservation->setStationDepart($stationDepart->getName()); // On stocke le nom de la station
-            $reservation->setStationFin($stationFin->getName()); // Même ici
-            $reservation->setIdUser($user);
+                $reservation = new Reservation();
+                $reservation->setDateReservation($dateReservation);
+                $reservation->setStationDepart($stationDepart->getName()); // On stocke le nom de la station
+                $reservation->setStationFin($stationFin->getName()); // Même ici
+                $reservation->setIdUser($user);
 
-            // Sauvegarder la réservation dans la base de données
-            $entityManager->persist($reservation);
-            $entityManager->flush();
+                // Sauvegarder la réservation dans la base de données
+                $entityManager->persist($reservation);
+                $entityManager->flush();
+
+                $this->addFlash('success', 'Vous avez loué un vélo avec succès !');
+
+            }
+
+
+
+            return $this->render('reservation/index.html.twig', [
+                'station_names' => $stationNames,
+                'stations' => $stations,
+
+            ]);
         }
-
-
-        return $this->render('reservation/index.html.twig', [
-            'station_names' => $stationNames,
-            'stations' => $stations,
-
-        ]);
     }
-}
 
 
 

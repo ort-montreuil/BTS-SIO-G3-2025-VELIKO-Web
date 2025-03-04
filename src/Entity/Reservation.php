@@ -14,16 +14,14 @@ class Reservation
     #[ORM\Column]
     private ?int $id = null;
 
-    #[ORM\Column(type: Types::DATE_MUTABLE)]
+    #[ORM\Column(type: Types::DATE_MUTABLE, nullable: true)]
     private ?\DateTimeInterface $dateReservation = null;
 
     #[ORM\Column(length: 255)]
     private ?string $stationDepart = null;
 
     #[ORM\Column(length: 255)]
-    private ?string $StationFin = null;
-
-
+    private ?string $stationFin = null;
 
     #[ORM\ManyToOne(inversedBy: 'reservations')]
     private ?User $idUser = null;
@@ -31,13 +29,6 @@ class Reservation
     public function getId(): ?int
     {
         return $this->id;
-    }
-
-    public function setId(int $id): static
-    {
-        $this->id = $id;
-
-        return $this;
     }
 
     public function getDateReservation(): ?\DateTimeInterface
@@ -66,16 +57,15 @@ class Reservation
 
     public function getStationFin(): ?string
     {
-        return $this->StationFin;
+        return $this->stationFin;
     }
 
-    public function setStationFin(string $StationFin): static
+    public function setStationFin(string $stationFin): static
     {
-        $this->StationFin = $StationFin;
+        $this->stationFin = $stationFin;
 
         return $this;
     }
-
 
     public function getIdUser(): ?User
     {
@@ -88,4 +78,5 @@ class Reservation
 
         return $this;
     }
+
 }
