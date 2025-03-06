@@ -101,12 +101,19 @@
                         {% endfor %}
                     </select>
                 </div>
-<br>
+                <div>
+                    <label for="typeVelo">Type de vélo :</label>
+                    <select id="typeVelo" name="typeVelo">
+                        <option value="electrique">Electrique</option>
+                        <option value="mecanique">Mécanique</option>
+                    </select>
+                </div>
                 <div class="text-center">
                     <button type="submit" class="btn btn-lg btn-primary">Réserver</button>
                 </div>
                 </form>
 <br>
+
             {% for message in app.flashes('success') %}
                 <div class="alert alert-success">{{ message }}</div>
             {% endfor %}

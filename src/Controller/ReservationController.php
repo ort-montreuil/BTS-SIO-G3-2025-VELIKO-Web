@@ -36,38 +36,9 @@ class ReservationController extends AbstractController
     {
         $user = $this->getUser();
         // Vérifier si l'utilisateur est connecté
-        if (!$this->getUser()) {
+        if (!$user) {
             return $this->redirectToRoute('app_login');
         }
-
-
-        $curl = curl_init();
-
-        curl_setopt_array($curl, [
-            CURLOPT_PORT => "9042",
-            CURLOPT_URL => "http://localhost:9042/api/velo/location?",
-            CURLOPT_RETURNTRANSFER => true,
-            CURLOPT_MAXREDIRS => 10,
-            CURLOPT_TIMEOUT => 30,
-            CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
-            CURLOPT_CUSTOMREQUEST => "PUT",
-            CURLOPT_POSTFIELDS => "",
-            CURLOPT_HTTPHEADER => [
-                "Authorization: RG6F8do7ERFGsEgwkPEdW1Feyus0LXJ21E2EZRETTR65hN9DL8a3O8a",
-            ],
-        ]);
-
-        $response = curl_exec($curl);
-        $err = curl_error($curl);
-
-        curl_close($curl);
-
-        if ($err) {
-            echo "cURL Error #:" . $err;
-        } else {
-            json_decode($response, true);
-        }
-
 
         $stationNames = [];
         $stations = $this->stationRepository->findAll();
@@ -85,28 +56,52 @@ class ReservationController extends AbstractController
             $dateReservation = $request->get('date_reservation');
             $stationDepartId = $request->get('stationDepart');
             $stationFinId = $request->get('stationFin');
+            $typeVelo = $request->get('typeVelo');
 
-            $dateReservation = \DateTime::createFromFormat('Y-m-d', $dateReservation);
+            $response = $this->makeCurl("/api/velos", "GET", "");
 
-            // Récupérer les stations de la base de données
-            $stationDepart = $this->stationRepository->find($stationDepartId);
-            $stationFin = $this->stationRepository->find($stationFinId);
+            foreach ($response as $velo) {
+                $idVelo = $velo["velo_id"];
 
-            // Créer la réservation
-                $reservation = new Reservation();
-                $reservation->setDateReservation($dateReservation);
-                $reservation->setStationDepart($stationDepart->getName()); // On stocke le nom de la station
-                $reservation->setStationFin($stationFin->getName()); // Même ici
-                $reservation->setIdUser($user);
+                // Vérifier si le vélo est disponible à la station de départ
+                if ($velo["station_id_available"] == $stationDepartId
+                    && $velo["status"] == "available"
+                    && ($velo["type"] == "ebike" || $velo["type"] == "mechanical")) {
 
-                // Sauvegarder la réservation dans la base de données
-                $entityManager->persist($reservation);
-                $entityManager->flush();
+                    // Mettre le vélo en location
+                    $this->makeCurl("/api/velo/{$idVelo}/location", "PUT", "RG6F8do7ERFGsEgwkPEdW1Feyus0LXJ21E2EZRETTR65hN9DL8a3O8a");
 
-                $this->addFlash('success', 'Vous avez loué un vélo avec succès !');
+                    // Vérifier si le vélo est en location et doit être ramené à la station de fin
+                    if ($velo["station_id_available"] != $stationFinId
+                        && $velo["status"] == "location") {
 
+                        // Restauration du vélo à la station de fin
+                        $this->makeCurl("/api/velo/{$idVelo}/restore/{$stationFinId}", "PUT", "RG6F8do7ERFGsEgwkPEdW1Feyus0LXJ21E2EZRETTR65hN9DL8a3O8a");
+
+                    }
+
+
+                    // Créer la réservation
+                    $dateReservation = \DateTime::createFromFormat('Y-m-d', $dateReservation);
+                    $stationDepart = $this->stationRepository->find($stationDepartId);
+                    $stationFin = $this->stationRepository->find($stationFinId);
+
+                    $reservation = new Reservation();
+                    $reservation->setDateReservation($dateReservation);
+                    $reservation->setStationDepart($stationDepart->getName());
+                    $reservation->setStationFin($stationFin->getName());
+                    $reservation->setTypeVelo($typeVelo);
+                    $reservation->setIdUser($user);
+
+                    $entityManager->persist($reservation);
+                    $entityManager->flush();
+
+                    $this->addFlash('success', 'Vous avez loué un vélo avec succès !');
+
+                    break; // Sortir de la boucle après avoir réservé un vélo
+                }
             }
-
+        }
 
 
             return $this->render('reservation/index.html.twig', [
@@ -115,7 +110,42 @@ class ReservationController extends AbstractController
 
             ]);
         }
+
+        public
+        function makeCurl(string $url, string $methode, string $token)
+        {
+
+            $curl = curl_init();
+
+            curl_setopt_array($curl, [
+                CURLOPT_PORT => "9042",
+                CURLOPT_URL => $_ENV["API_VELIKO_URL"] . $url,
+                CURLOPT_RETURNTRANSFER => true,
+                CURLOPT_MAXREDIRS => 10,
+                CURLOPT_TIMEOUT => 30,
+                CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
+                CURLOPT_CUSTOMREQUEST => $methode,
+                CURLOPT_POSTFIELDS => "",
+                CURLOPT_HTTPHEADER => [
+                    "Authorization:" . $token]
+            ]);
+
+            $response = curl_exec($curl);
+            $err = curl_error($curl);
+
+            curl_close($curl);
+
+            if ($err) {
+                echo "cURL Error #:" . $err;
+            } else {
+                $response = json_decode($response, true);
+
+            }
+
+            return $response;
+        }
     }
+
 
 
 

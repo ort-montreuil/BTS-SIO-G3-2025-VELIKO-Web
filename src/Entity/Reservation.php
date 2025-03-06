@@ -26,6 +26,9 @@ class Reservation
     #[ORM\ManyToOne(inversedBy: 'reservations')]
     private ?User $idUser = null;
 
+    #[ORM\Column(length: 255)]
+    private ?string $typeVelo = null;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -75,6 +78,18 @@ class Reservation
     public function setIdUser(?User $idUser): static
     {
         $this->idUser = $idUser;
+
+        return $this;
+    }
+
+    public function getTypeVelo(): ?string
+    {
+        return $this->typeVelo;
+    }
+
+    public function setTypeVelo(string $typeVelo): static
+    {
+        $this->typeVelo = $typeVelo;
 
         return $this;
     }
