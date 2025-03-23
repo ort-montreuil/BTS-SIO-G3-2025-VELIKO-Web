@@ -39,14 +39,23 @@ Lancer la migration pour créer les tables nécessaires :
 symfony console doctrine:migrations:migrate
 ```
 
+
 ### Étape 6 : Remplir la base de données avec les stations
 Exécuter la commande pour insérer les stations dans la base de données :
 ```bash
-symfony console app:fetch-stations
-
+symfony console doctrine:fixtures:load
 ```
+### pour se connecter voici les identifiants :
+- email : user-0@gmail.com
+- mot de passe : Motdepasse123//
 
-### Étape 7 : Lancer le serveur de développement
+
+### Etape 7 : Mettre les stations dans la base de donnée
+````bash
+php bin/console app:fetch-stations  # pour mettre les stations dans la base de donnée
+````
+
+### Étape 8 : Lancer le serveur de développement
 Démarrer le serveur Symfony :
 ```bash
 symfony serve:start
