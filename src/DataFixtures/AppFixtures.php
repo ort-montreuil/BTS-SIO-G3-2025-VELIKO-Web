@@ -2,6 +2,7 @@
 
 namespace App\DataFixtures;
 
+use App\Entity\Reservation;
 use App\Entity\User;
 use Doctrine\Bundle\FixturesBundle\Fixture;
 use Doctrine\Persistence\ObjectManager;
@@ -37,6 +38,8 @@ class AppFixtures extends Fixture
         $manager->persist($user);
 
 
+        //---------Notre USER------------
+
         for ($i = 0; $i < 10; $i++) {
             $user = new User();
             $user->setEmail("user-$i@gmail.com");
@@ -53,6 +56,15 @@ class AppFixtures extends Fixture
             $user->setBooleanChangerMdp(0);
             $manager->persist($user);
         }
+
+        //---------RESERVATION------------
+        $reservation = new Reservation();
+        $reservation->setDateReservation(new \DateTime('2021-01-01'));
+        $reservation->setStationDepart('Gare de Lyon');
+        $reservation->setStationFin('Gare de l\'Est');
+        $reservation->setIdUser($user);
+        $reservation->setTypeVelo('electrique');
+        $manager->persist($reservation);
 
 
         $manager->flush();
