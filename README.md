@@ -10,9 +10,12 @@
 ## Installation
 
 ### Étape 1 : Cloner le projet
-Cloner le dépôt Git du projet :
+Cloner le dépôt Git du projet en ssh ou https : 
 ```bash
-git clone  git@github.com:ort-montreuil/BTS-SIO-G3-2025-VELIKO-Web.git
+ git clone  git@github.com:ort-montreuil/BTS-SIO-G3-2025-VELIKO-Web.git
+```
+```bash
+git clone  https://github.com/ort-montreuil/BTS-SIO-G3-2025-VELIKO-Web.git
 ```
 
 ### Etape 2 : Configuration du fichier .env
