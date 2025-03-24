@@ -19,7 +19,7 @@ git clone  https://github.com/ort-montreuil/BTS-SIO-G3-2025-VELIKO-Web.git
 ```
 
 ### Etape 2 : Configuration du fichier .env
-Créez un fichier .env à la racine du projet en copiant le contenu du fichier .env.example, puis modifiez la ligne contenant les informations de connexion à la base de données en y renseignant votre identifiant et votre mot de passe.
+Créez un fichier .env à la racine du projet en copiant le contenu du fichier .env.example, puis modifiez la ligne contenant les informations de connexion à la base de données en y renseignant votre identifiant et votre mot de passe ainsi que le nom de la table . 
 (Vous pouvez consulter le fichier .env.example pour mieux comprendre.)
 
 
