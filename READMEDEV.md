@@ -10,14 +10,17 @@
 ## Installation
 
 ### Étape 1 : Cloner le projet
-Cloner le dépôt Git du projet :
+Cloner le dépôt Git du projet en ssh ou https : 
 ```bash
-git clone  git@github.com:ort-montreuil/BTS-SIO-G3-2025-VELIKO-Web.git
+ git clone  git@github.com:ort-montreuil/BTS-SIO-G3-2025-VELIKO-Web.git
+```
+```bash
+git clone  https://github.com/ort-montreuil/BTS-SIO-G3-2025-VELIKO-Web.git
 ```
 
 ### Etape 2 : Configuration du fichier .env
-Créer un fichier `.env` à la racine du projet, le renommer en `.env`, puis modifier la ligne 3 pour remplacer `!ChangeMe!` par votre identifiant et mot de passe de base de données.
-Voir le .env.example pour mieux comprendre .
+Créez un fichier .env à la racine du projet en copiant le contenu du fichier .env.example, puis modifiez la ligne contenant les informations de connexion à la base de données en y renseignant votre identifiant et votre mot de passe ainsi que le nom de la table . 
+(Vous pouvez consulter le fichier .env.example pour mieux comprendre.)
 
 
 ### Étape 3 : Installation des dépendances
@@ -45,9 +48,9 @@ Exécuter la commande pour insérer les stations dans la base de données :
 ```bash
 symfony console doctrine:fixtures:load
 ```
-### pour se connecter voici les identifiants :
+### pour se connecter en tant qu'utilisateur voici les identifiants :
 - email : user-0@gmail.com
-- mot de passe : Motdepasse123//
+- mot de passe : Motdepasse123/
 
 
 ### Etape 7 : Mettre les stations dans la base de donnée
@@ -60,4 +63,3 @@ Démarrer le serveur Symfony :
 ```bash
 symfony serve:start
 ```
-
