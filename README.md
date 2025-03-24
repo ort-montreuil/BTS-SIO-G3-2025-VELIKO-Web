@@ -48,9 +48,9 @@ Exécuter la commande pour insérer les stations dans la base de données :
 ```bash
 symfony console doctrine:fixtures:load
 ```
-### pour se connecter voici les identifiants :
+### pour se connecter en tant qu'utilisateur voici les identifiants :
 - email : user-0@gmail.com
-- mot de passe : Motdepasse123//
+- mot de passe : Motdepasse123/
 
 
 ### Etape 7 : Mettre les stations dans la base de donnée
